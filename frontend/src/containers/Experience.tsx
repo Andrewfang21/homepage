@@ -1,102 +1,124 @@
 import React from "react";
+import { Element } from "react-scroll";
 import styled from "styled-components";
-import cuhkImage from "../assets/cuhk-logo.png";
 import stoqoLogo from "../assets/stoqo-logo.png";
+import { EXPERIENCE_ROUTE } from "../constants/routes";
+import { BACKGROUND_COLOR, FONT_COLOR } from "../constants/style";
+import {
+  ExperienceModel,
+  EducationModel,
+  WorkModel,
+} from "../models/Experience";
 
-class Experience extends React.Component {
+interface ExperienceProps {
+  experiences: ExperienceModel;
+}
+
+class Experience extends React.Component<ExperienceProps> {
+  constructor(props: ExperienceProps) {
+    super(props);
+  }
+
   render() {
+    const { experiences }: { experiences: ExperienceModel } = this.props;
+
     return (
-      <Container>
-        <Flex>
-          <SectionTitle>Education</SectionTitle>
-          <Timeline>
-            <div className="time-and-place">
-              <div className="place">Hong Kong SAR</div>
-              <div className="time">Aug 2018 - Present</div>
-            </div>
-            <div className="image">
-              <img src={cuhkImage} alt="institution" />
-            </div>
-            <div className="panel">
-              <div className="role">Computer Science Undergraduate Student</div>
-              <div className="institution">
-                <a href={"https://www.cuhk.edu.hk/"}>
-                  The Chinese University of Hong Kong
-                </a>
-              </div>
-              <div className="grade">Current CGPA: 0.00 / 4.00</div>
-              <ul>
-                <li className="description">
-                  Intended Concentration: Intelligence Science & Distributed
-                  Systems, Networks and Security
-                </li>
-                <li className="description">
-                  Relevant Courses Taken: Software Engineering, Distributed and
-                  Parallel Computing, Database Systems, Design and Analysis of
-                  Algorithms, Operating Systems, Cyber Security, Artificial
-                  Intelligence, Data Structures, Object-Oriented Programming,
-                  Discrete Mathematics, Engineering Economics
-                </li>
-                <li className="description">
-                  Activities and Societies: Google Developer Student (DSC) Core
-                  Team Member
-                </li>
-              </ul>
-            </div>
-          </Timeline>
-          <SectionTitle>Work and Voluntary Experiences</SectionTitle>
-          <Timeline>
-            <div className="time-and-place">
-              <div className="place">Jakarta, Indonesia</div>
-              <div className="time">-</div>
-            </div>
-            <div className="image">
-              <img src={stoqoLogo} alt="company" />
-            </div>
-            <div className="panel">
-              <div className="role">Software Engineering Intern</div>
-              <div className="institution">
-                <a href={"https://www.stoqo.com/"}>STOQO</a>
-              </div>
-              <ul>
-                <li className="description">
-                  STOQO is a B2B platform that aims to streamline the Food &
-                  Beverages business supply chain.
-                </li>
-                <li className="description">Rescinded due to COVID19. </li>
-              </ul>
-            </div>
-          </Timeline>
-        </Flex>
-      </Container>
+      <StyledElement name={EXPERIENCE_ROUTE}>
+        <Container>
+          <Flex>
+            <div className="header">Education</div>
+            {Object.values(experiences.educations).map(
+              (education: EducationModel) => (
+                <Timeline key={education.id}>
+                  <div className="time-and-place">
+                    <div className="place">{education.place}</div>
+                    <div className="time">{education.time}</div>
+                  </div>
+                  <div className="image">
+                    <img src={education.imageUrl} alt={education.institution} />
+                  </div>
+                  <div className="panel">
+                    <div className="role">{education.role}</div>
+                    <div className="institution">
+                      <a href={education.institutionUrl}>
+                        {education.institution}
+                      </a>
+                    </div>
+                    <div className="grade">{education.grade}</div>
+                    <ul>
+                      {Object.values(education.descriptions).map(
+                        (description: string) => (
+                          <li key={description} className="description">
+                            {description}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                </Timeline>
+              )
+            )}
+            <div className="header">Work and Voluntary Experiences</div>
+            {Object.values(experiences.works).map((work: WorkModel) => (
+              <Timeline key={work.id}>
+                <div className="time-and-place">
+                  <div className="place">{work.place}</div>
+                  <div className="time">{work.time}</div>
+                </div>
+                <div className="image">
+                  <img src={work.imageUrl} alt={work.company} />
+                </div>
+                <div className="panel">
+                  <div className="role">{work.role}</div>
+                  <div className="institution">
+                    <a href={work.companyUrl}>{work.company}</a>
+                  </div>
+                  <ul>
+                    {Object.values(work.descriptions).map(
+                      (description: string) => (
+                        <li key={description} className="description">
+                          {description}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </div>
+              </Timeline>
+            ))}
+          </Flex>
+        </Container>
+      </StyledElement>
     );
   }
 }
 
 export default Experience;
 
-const Container = styled.div`
+const StyledElement = styled(Element)`
   width: 100%;
-  align-items: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-left: auto;
   margin-right: auto;
-  background-color: pink;
+  background-color: ${BACKGROUND_COLOR};
+  color: ${FONT_COLOR};
+`;
+
+const Container = styled.div`
+  width: 85%;
 `;
 
 const Flex = styled.div`
   display: flex;
   flex-direction: column;
-  width: 85%;
-`;
 
-const SectionTitle = styled.div`
-  margin-top: 30px;
-  margin-bottom: 30px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #d6d5ec;
+  .header {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 40px;
+    font-weight: bold;
+  }
 `;
 
 const Timeline = styled.ul`
@@ -104,8 +126,8 @@ const Timeline = styled.ul`
 
   .time-and-place {
     display: flex;
-    width: 12%;
-    text-align: right;
+    width: 15%;
+    text-align: left;
     flex-direction: column;
 
     @media screen and (max-width: 900px) {
@@ -132,7 +154,7 @@ const Timeline = styled.ul`
     width: 15%;
 
     img {
-      height: 100px;
+      height: 80px;
       margin-left: auto;
       margin-right: auto;
       display: block;
@@ -140,6 +162,11 @@ const Timeline = styled.ul`
 
     @media screen and (max-width: 900px) {
       width: 100%;
+      height: 70px;
+
+      img {
+        height: 70px;
+      }
     }
   }
 

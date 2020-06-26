@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { BACKGROUND_COLOR, FONT_COLOR } from "../constants/style";
 
 class Home extends React.Component {
   render() {
@@ -31,7 +32,8 @@ const Container = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  background-color: rgb(35, 41, 56);
+  background-color: ${BACKGROUND_COLOR};
+  color: ${FONT_COLOR};
 `;
 
 const Wrapper = styled.div`
@@ -41,11 +43,9 @@ const Wrapper = styled.div`
   align-items: center;
   width: 85%;
   margin-top: 35vh;
-  /* margin: auto; */
 `;
 
 const Name = styled.div`
-  color: white;
   font-weight: bold;
   font-size: 50px;
   margin-bottom: 10px;
@@ -53,7 +53,6 @@ const Name = styled.div`
 `;
 
 const Description = styled.div`
-  color: white;
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 10px;

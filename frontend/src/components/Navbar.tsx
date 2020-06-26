@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-scroll";
 import styled from "styled-components";
+import { links, PageDetails } from "../constants/scrollLinks";
 
 interface NavbarProps {}
 
@@ -38,7 +40,20 @@ class NavigationBar extends React.Component<NavbarProps, NavbarState> {
     return (
       <Transition>
         <StyledNavbar className={this.state.show ? "active" : "hidden"}>
-          <Links></Links>
+          <Links>
+            {Object.values(links).map((link: PageDetails) => (
+              <Link
+                className="link"
+                key={link.to}
+                to={link.to}
+                spy
+                smooth
+                duration={500}
+              >
+                {link.text}
+              </Link>
+            ))}
+          </Links>
         </StyledNavbar>
       </Transition>
     );
@@ -71,13 +86,18 @@ const StyledNavbar = styled.div`
   justify-content: space-between;
   align-items: center;
   font-weight: bolder;
-  background-color: blue;
-  /* background: rgb(5, 16, 48); */
+  background-color: rgb(55, 56, 59, 0.5);
   z-index: 1000;
 `;
 
 const Links = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: flex-end;
+  color: white;
+
+  .link:hover {
+    cursor: pointer;
+  }
 `;

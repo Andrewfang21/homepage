@@ -1,52 +1,56 @@
 import React from "react";
+import { Element } from "react-scroll";
 import styled from "styled-components";
-import avatarImage from "../assets/avatar-image.jpg";
+import { BACKGROUND_COLOR, FONT_COLOR } from "../constants/style";
+import { ProfileModel } from "../models/About";
+import { ABOUT_ROUTE } from "../constants/routes";
 
-class About extends React.Component {
+interface AboutProps {
+  about: ProfileModel;
+}
+
+class About extends React.Component<AboutProps> {
   render() {
+    const { about }: { about: ProfileModel } = this.props;
+
     return (
-      <Container>
-        <Flex>
-          <Image>
-            <img className="image" src={avatarImage} alt="avatar" />
-          </Image>
-          <Detail>
-            <div className="title">About Me</div>
-            <div className="content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Facilisis volutpat est velit egestas. Odio euismod lacinia at quis
-              risus sed vulputate. Volutpat sed cras ornare arcu dui vivamus
-              arcu felis. Vestibulum lorem sed risus ultricies tristique nulla
-              aliquet enim tortor. Volutpat odio facilisis mauris sit. Ut ornare
-              lectus sit amet est placerat. Elementum tempus egestas sed sed
-              risus. Placerat duis ultricies lacus sed turpis. Ut tellus
-              elementum sagittis vitae et leo. Massa id neque aliquam vestibulum
-              morbi blandit cursus risus.
-            </div>
-            <div className="content">
-              Consequat nisl vel pretium lectus quam id leo. Lacinia quis vel
-              eros donec ac odio. A cras semper auctor neque vitae tempus quam
-              pellentesque nec. Porttitor lacus luctus accumsan tortor posuere
-              ac ut consequat semper. Lectus quam id leo in vitae turpis massa
-              sed. Enim sit amet venenatis urna cursus eget nunc scelerisque.
-              Scelerisque fermentum dui faucibus in. Dictum at tempor commodo
-              ullamcorper a. Sed velit dignissim sodales ut eu sem integer vitae
-              justo. Amet commodo nulla facilisi nullam. Dolor sit amet
-              consectetur adipiscing elit. Non enim praesent elementum facilisis
-              leo. Turpis in eu mi bibendum neque egestas congue quisque
-              egestas. Venenatis urna cursus eget nunc scelerisque viverra.
-              Gravida neque convallis a cras semper auctor neque vitae tempus. A
-              erat nam at lectus. Amet nulla facilisi morbi tempus iaculis.
-            </div>
-          </Detail>
-        </Flex>
-      </Container>
+      <StyledElement name={ABOUT_ROUTE}>
+        <Container>
+          <Flex>
+            <Image>
+              <img className="image" src={about.imageUrl} alt={about.name} />
+            </Image>
+            <Detail>
+              <div className="title">About Me</div>
+              {Object.values(about.contents).map((content: string) => (
+                <div key={content} className="content">
+                  {content}
+                </div>
+              ))}
+            </Detail>
+          </Flex>
+        </Container>
+      </StyledElement>
     );
   }
 }
 
 export default About;
+
+const StyledElement = styled(Element)`
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: ${BACKGROUND_COLOR};
+  color: ${FONT_COLOR};
+`;
+
+const Container = styled.div`
+  width: 85%;
+`;
 
 const Detail = styled.div`
   width: 100%;
@@ -54,7 +58,7 @@ const Detail = styled.div`
   .title {
     padding: 50px 0px 20px 0px;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 40px;
 
     @media screen and (max-width: 900px) {
       text-align: center;
@@ -66,6 +70,11 @@ const Detail = styled.div`
     padding-left: 20px;
     margin-bottom: 30px;
     text-align: justify;
+    color: ${FONT_COLOR};
+
+    @media screen and (max-width: 900px) {
+      padding-left: 0px;
+    }
   }
 `;
 
@@ -81,25 +90,15 @@ const Image = styled.div`
     @media screen and (max-width: 900px) {
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 30px;
       display: block;
     }
   }
 `;
 
-const Container = styled.div`
-  width: 100%;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: pink;
-`;
-
 const Flex = styled.div`
   display: flex;
   flex-direction: row;
-  width: 85%;
 
   @media screen and (max-width: 900px) {
     flex-direction: column;
