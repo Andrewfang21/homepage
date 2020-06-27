@@ -10,6 +10,7 @@ interface PageLinks {
   About: PageDetails;
   Experience: PageDetails;
   Project: PageDetails;
+  Achievement: PageDetails;
   Skill: PageDetails;
 }
 
@@ -24,14 +25,18 @@ export const links: PageLinks = {
   },
   Experience: {
     to: routes.EXPERIENCE_ROUTE,
-    text: "Experience",
+    text: "Experiences",
   },
   Project: {
     to: routes.PROJECT_ROUTE,
-    text: "Project",
+    text: "Projects",
+  },
+  Achievement: {
+    to: routes.ACHIEVEMENT_ROUTE,
+    text: "Achievements",
   },
   Skill: {
     to: routes.SKILL_ROUTE,
-    text: "Skill",
+    text: "Skills",
   },
 };

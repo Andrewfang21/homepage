@@ -4,6 +4,7 @@ import Home from "./Home";
 import About from "./About";
 import Experience from "./Experience";
 import Project from "./Project";
+import Achievement from "./Achievement";
 import Skill from "./Skill";
 import NavigationBar from "../components/Navbar";
 
@@ -11,6 +12,7 @@ import { skillData } from "../models/Skill";
 import { experienceData } from "../models/Experience";
 import { profileData } from "../models/About";
 import { projectData } from "../models/Project";
+import { achievementData } from "../models/Achievement";
 
 class Routes extends React.Component {
   render() {
@@ -21,6 +23,7 @@ class Routes extends React.Component {
         <About about={profileData} />
         <Experience experiences={experienceData} />
         <Project projects={projectData} />
+        <Achievement achievements={achievementData} />
         <Skill skills={skillData} />
       </Container>
     );
@@ -35,4 +38,5 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   overflow: hidden;
+  font-family: "Expletus Sans";
 `;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Element } from "react-scroll";
 import styled from "styled-components";
-import { BACKGROUND_COLOR, FONT_COLOR } from "../constants/style";
+import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
 import { ProfileModel } from "../models/About";
 import { ABOUT_ROUTE } from "../constants/routes";
 
@@ -44,7 +44,7 @@ const StyledElement = styled(Element)`
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${BACKGROUND_COLOR};
+  background-color: ${PRIMARY_COLOR};
   color: ${FONT_COLOR};
 `;
 

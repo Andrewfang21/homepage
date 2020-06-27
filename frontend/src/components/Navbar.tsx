@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-scroll";
 import styled from "styled-components";
 import { links, PageDetails } from "../constants/scrollLinks";
+import { SECONDARY_COLOR } from "../constants/style";
 
 interface NavbarProps {}
 
@@ -97,7 +98,14 @@ const Links = styled.div`
   justify-content: flex-end;
   color: white;
 
+  .link {
+    margin: 0 10px;
+    transform: translateX(-30px);
+    -webkit-transform: translateX(-30px);
+  }
+
   .link:hover {
     cursor: pointer;
+    color: ${SECONDARY_COLOR};
   }
 `;

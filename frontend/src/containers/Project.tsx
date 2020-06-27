@@ -3,7 +3,7 @@ import { Element } from "react-scroll";
 import styled from "styled-components";
 import { ProjectModel } from "../models/Project";
 import { PROJECT_ROUTE } from "../constants/routes";
-import { BACKGROUND_COLOR, FONT_COLOR } from "../constants/style";
+import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
 
 interface ProjectProps {
   projects: ProjectModel[];
@@ -22,22 +22,20 @@ class Project extends React.Component<ProjectProps> {
               <div className="title">
                 {project.title}
                 <span className="github">
-                  <a href={project.link}>
+                  <a href={project.link} target="_blank">
                     <i className="fa fa-github"></i>
                   </a>
                 </span>
               </div>
               <div className="image">
                 {Object.values(project.images).map((image: string) => (
-                  <img key={image} src={image} alt="${project.title}-image-1" />
+                  <img key={image} src={image} alt="{project.title}-1" />
                 ))}
               </div>
               <ul className="descriptions">
                 {Object.values(project.descriptions).map(
                   (description: string) => (
-                    <li key={description} className="description">
-                      {description}
-                    </li>
+                    <li key={description}>{description}</li>
                   )
                 )}
                 <li className="tech-stack">
@@ -60,7 +58,7 @@ const StyledElement = styled(Element)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${BACKGROUND_COLOR};
+  background-color: ${PRIMARY_COLOR};
   color: ${FONT_COLOR};
 `;
 
@@ -79,19 +77,23 @@ const Detail = styled.div`
   display: flex;
   flex-direction: column;
   align-content: center;
-  text-align: center;
 
   .title {
     font-weight: bold;
     font-size: 30px;
     margin: 0.5em 0;
+    align-self: center;
 
     .github {
       vertical-align: middle;
       margin-left: 10px;
 
-      a:hover {
-        color: red;
+      a {
+        color: ${FONT_COLOR};
+
+        :hover {
+          color: ${SECONDARY_COLOR};
+        }
       }
     }
   }
@@ -114,7 +116,6 @@ const Detail = styled.div`
     display: flex;
     flex-direction: column;
     text-align: justify;
-    align-items: center;
 
     .tech-stack {
       font-weight: bold;
@@ -122,6 +123,8 @@ const Detail = styled.div`
     }
 
     @media screen and (min-width: 900px) {
+      align-items: center;
+
       li {
         width: 75%;
         margin: 3px;

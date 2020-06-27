@@ -2,7 +2,7 @@ import React from "react";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 import { SKILL_ROUTE } from "../constants/routes";
-import { BACKGROUND_COLOR, FONT_COLOR } from "../constants/style";
+import { PRIMARY_COLOR, FONT_COLOR, SECONDARY_COLOR } from "../constants/style";
 import { SkillModel } from "../models/Skill";
 
 interface SkillProps {
@@ -54,7 +54,7 @@ const StyledElement = styled(Element)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${BACKGROUND_COLOR};
+  background-color: ${PRIMARY_COLOR};
   color: ${FONT_COLOR};
 `;
 
@@ -62,7 +62,7 @@ const Container = styled.div`
   width: 85%;
 
   .header {
-    margin: 3vh 0;
+    margin: 30px 0;
     width: 85%;
     font-size: 40px;
     font-weight: bold;
@@ -81,7 +81,7 @@ const Skills = styled.ul`
     margin: 10px 0;
     transition: width 300ms ease-in-out;
 
-    background-color: pink;
+    background-color: ${SECONDARY_COLOR};
 
     .collapsed & {
       width: 0 !important;
