@@ -24,8 +24,8 @@ class SocialMedias extends React.Component {
     return (
       <SocialMedia>
         {Object.values(SocialMediaData).map((data: SocialMediaModel) => (
-          <span>
-            <a href={data.link} target="_blank">
+          <span key={data.icon}>
+            <a href={data.link} rel="noopener noreferrer" target="_blank">
               <i className={data.icon} />
             </a>
           </span>

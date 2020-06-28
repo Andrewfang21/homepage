@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 import { EXPERIENCE_ROUTE } from "../constants/routes";
@@ -8,14 +9,39 @@ import {
   EducationModel,
   WorkModel,
 } from "../models/Experience";
+import { fetchExperiences } from "../redux/actions/Experience";
+import { StoreState } from "../redux/reducers";
 
 interface ExperienceProps {
   experiences: ExperienceModel;
+  fetchExperiences: Function;
 }
 
-class Experience extends React.Component<ExperienceProps> {
+interface ExperienceState {
+  fetching: boolean;
+}
+
+class Experience extends React.Component<ExperienceProps, ExperienceState> {
   constructor(props: ExperienceProps) {
     super(props);
+    this.state = { fetching: false };
+  }
+
+  componentDidUpdate(prevProps: ExperienceProps): void {
+    const hasLoaded: boolean =
+      prevProps.experiences.educations.length === 0 &&
+      prevProps.experiences.works.length === 0 &&
+      this.props.experiences.educations.length !== 0 &&
+      this.props.experiences.works.length !== 0;
+
+    if (hasLoaded) {
+      this.setState({ fetching: false });
+    }
+  }
+
+  componentDidMount(): void {
+    this.setState({ fetching: true });
+    this.props.fetchExperiences();
   }
 
   render() {
@@ -23,6 +49,7 @@ class Experience extends React.Component<ExperienceProps> {
 
     return (
       <StyledElement name={EXPERIENCE_ROUTE}>
+        {this.state.fetching ? "LOADING" : null}
         <Container>
           <Flex>
             <div className="header">Education</div>
@@ -39,7 +66,11 @@ class Experience extends React.Component<ExperienceProps> {
                   <div className="panel">
                     <div className="role">{education.role}</div>
                     <div className="institution">
-                      <a href={education.institutionUrl} target="_blank">
+                      <a
+                        href={education.institutionUrl}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
                         {education.institution}
                       </a>
                     </div>
@@ -70,7 +101,11 @@ class Experience extends React.Component<ExperienceProps> {
                 <div className="panel">
                   <div className="role">{work.role}</div>
                   <div className="institution">
-                    <a href={work.companyUrl} target="_blank">
+                    <a
+                      href={work.companyUrl}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
                       {work.company}
                     </a>
                   </div>
@@ -93,7 +128,13 @@ class Experience extends React.Component<ExperienceProps> {
   }
 }
 
-export default Experience;
+const mapStateToProps = ({
+  experiences,
+}: StoreState): { experiences: ExperienceModel } => {
+  return { experiences };
+};
+
+export default connect(mapStateToProps, { fetchExperiences })(Experience);
 
 const StyledElement = styled(Element)`
   width: 100%;

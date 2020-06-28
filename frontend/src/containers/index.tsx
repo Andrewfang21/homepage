@@ -9,7 +9,6 @@ import Skill from "./Skill";
 import NavigationBar from "../components/Navbar";
 
 import { skillData } from "../models/Skill";
-import { experienceData } from "../models/Experience";
 import { profileData } from "../models/About";
 import { projectData } from "../models/Project";
 import { achievementData } from "../models/Achievement";
@@ -21,7 +20,7 @@ class Routes extends React.Component {
         <NavigationBar />
         <Home />
         <About about={profileData} />
-        <Experience experiences={experienceData} />
+        <Experience />
         <Project projects={projectData} />
         <Achievement achievements={achievementData} />
         <Skill skills={skillData} />

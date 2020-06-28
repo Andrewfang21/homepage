@@ -22,7 +22,11 @@ class Project extends React.Component<ProjectProps> {
               <div className="title">
                 {project.title}
                 <span className="github">
-                  <a href={project.link} target="_blank">
+                  <a
+                    href={project.link}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
                     <i className="fa fa-github"></i>
                   </a>
                 </span>
