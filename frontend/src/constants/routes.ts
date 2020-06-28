@@ -1,6 +1,6 @@
 export const HOME_ROUTE = "/";
-export const ABOUT_ROUTE = "/about";
-export const EXPERIENCE_ROUTE = "/experience";
-export const PROJECT_ROUTE = "/project";
-export const ACHIEVEMENT_ROUTE = "/achievement";
-export const SKILL_ROUTE = "/skill";
+export const PROFILE_ROUTE = "/profile";
+export const EXPERIENCE_ROUTE = "/experiences";
+export const PROJECT_ROUTE = "/projects";
+export const ACHIEVEMENT_ROUTE = "/achievements";
+export const SKILL_ROUTE = "/skills";

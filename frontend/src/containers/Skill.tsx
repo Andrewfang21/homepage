@@ -1,12 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
+
 import { SKILL_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR, SECONDARY_COLOR } from "../constants/style";
 import { SkillModel } from "../models/Skill";
+import { fetchSkills } from "../redux/actions/Skill";
+import { StoreState } from "../redux/reducers";
+import { SkillActionModel } from "../redux/reducers/Skill";
 
 interface SkillProps {
-  skills: SkillModel[];
+  skills: SkillActionModel;
+  fetchSkills: Function;
 }
 
 interface SkillState {
@@ -20,6 +26,10 @@ class Skill extends React.Component<SkillProps, SkillState> {
   }
 
   componentDidMount() {
+    if (!this.props.skills.loaded) {
+      this.props.fetchSkills();
+    }
+
     setTimeout(() => {
       this.setState({ collapsed: false });
     }, 1000);
@@ -27,7 +37,7 @@ class Skill extends React.Component<SkillProps, SkillState> {
 
   render() {
     const { collapsed }: { collapsed: boolean } = this.state;
-    const { skills }: { skills: SkillModel[] } = this.props;
+    const { skills }: { skills: SkillModel[] } = this.props.skills;
 
     return (
       <StyledElement name={SKILL_ROUTE}>
@@ -47,7 +57,13 @@ class Skill extends React.Component<SkillProps, SkillState> {
   }
 }
 
-export default Skill;
+const mapStateToProps = ({
+  skills,
+}: StoreState): { skills: SkillActionModel } => {
+  return { skills };
+};
+
+export default connect(mapStateToProps, { fetchSkills })(Skill);
 
 const StyledElement = styled(Element)`
   width: 100%;

@@ -1,28 +1,44 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
-import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
-import { ProfileModel } from "../models/About";
-import { ABOUT_ROUTE } from "../constants/routes";
 
-interface AboutProps {
-  about: ProfileModel;
+import { PROFILE_ROUTE } from "../constants/routes";
+import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
+import { ProfileModel } from "../models/Profile";
+import { fetchProfile } from "../redux/actions/Profile";
+import { StoreState } from "../redux/reducers";
+import { ProfileActionModel } from "../redux/reducers/Profile";
+
+interface ProfileProps {
+  profile: ProfileActionModel;
+  fetchProfile: Function;
 }
 
-class About extends React.Component<AboutProps> {
+class Profile extends React.Component<ProfileProps> {
+  componentDidMount(): void {
+    if (!this.props.profile.loaded) {
+      this.props.fetchProfile();
+    }
+  }
+
   render() {
-    const { about }: { about: ProfileModel } = this.props;
+    const { profile }: { profile: ProfileModel } = this.props.profile;
 
     return (
-      <StyledElement name={ABOUT_ROUTE}>
+      <StyledElement name={PROFILE_ROUTE}>
         <Container>
           <Flex>
             <Image>
-              <img className="image" src={about.imageUrl} alt={about.name} />
+              <img
+                className="image"
+                src={profile.imageUrl}
+                alt={profile.name}
+              />
             </Image>
             <Detail>
               <div className="title">About Me</div>
-              {Object.values(about.contents).map((content: string) => (
+              {Object.values(profile.contents).map((content: string) => (
                 <div key={content} className="content">
                   {content}
                 </div>
@@ -35,7 +51,13 @@ class About extends React.Component<AboutProps> {
   }
 }
 
-export default About;
+const mapStateToProps = ({
+  profile,
+}: StoreState): { profile: ProfileActionModel } => {
+  return { profile };
+};
+
+export default connect(mapStateToProps, { fetchProfile })(Profile);
 
 const StyledElement = styled(Element)`
   width: 100%;

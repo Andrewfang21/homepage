@@ -1,17 +1,29 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
-import { ProjectModel } from "../models/Project";
+
 import { PROJECT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
+import { ProjectModel } from "../models/Project";
+import { fetchProjects } from "../redux/actions/Project";
+import { StoreState } from "../redux/reducers";
+import { ProjectActionModel } from "../redux/reducers/Project";
 
 interface ProjectProps {
-  projects: ProjectModel[];
+  projects: ProjectActionModel;
+  fetchProjects: Function;
 }
 
 class Project extends React.Component<ProjectProps> {
+  componentDidMount(): void {
+    if (!this.props.projects.loaded) {
+      this.props.fetchProjects();
+    }
+  }
+
   render() {
-    const { projects }: { projects: ProjectModel[] } = this.props;
+    const { projects }: { projects: ProjectModel[] } = this.props.projects;
 
     return (
       <StyledElement name={PROJECT_ROUTE}>
@@ -55,7 +67,13 @@ class Project extends React.Component<ProjectProps> {
   }
 }
 
-export default Project;
+const mapStateToProps = ({
+  projects,
+}: StoreState): { projects: ProjectActionModel } => {
+  return { projects };
+};
+
+export default connect(mapStateToProps, { fetchProjects })(Project);
 
 const StyledElement = styled(Element)`
   width: 100%;

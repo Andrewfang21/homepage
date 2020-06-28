@@ -1,19 +1,27 @@
 import { ExperienceAction, ExperienceActionTypes } from "../actions/types";
 import { ExperienceModel } from "../../models/Experience";
-// import { ExperienceActionModel } from "../actions/Experience";
 
-const INITIAL_STATE: ExperienceModel = {
+export interface ExperienceActionModel extends ExperienceModel {
+  loading: boolean;
+  loaded: boolean;
+}
+
+const INITIAL_STATE: ExperienceActionModel = {
   educations: [],
   works: [],
+  loading: false,
+  loaded: false,
 };
 
 export const experienceReducer = (
-  state: ExperienceModel = INITIAL_STATE,
+  state: ExperienceActionModel = INITIAL_STATE,
   action: ExperienceAction
 ) => {
   switch (action.type) {
-    case ExperienceActionTypes.SET_EXPERIENCE:
-      return { ...state, ...action.payload };
+    case ExperienceActionTypes.SET_EXPERIENCES:
+      return { ...state, ...action.payload, loading: false, loaded: true };
+    case ExperienceActionTypes.LOADING_EXPERIENCES:
+      return { ...state, loading: true };
     default:
       return state;
   }

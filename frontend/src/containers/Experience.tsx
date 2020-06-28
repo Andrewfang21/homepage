@@ -2,94 +2,75 @@ import React from "react";
 import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
+
 import { EXPERIENCE_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
-import {
-  ExperienceModel,
-  EducationModel,
-  WorkModel,
-} from "../models/Experience";
+import { EducationModel, WorkModel } from "../models/Experience";
 import { fetchExperiences } from "../redux/actions/Experience";
 import { StoreState } from "../redux/reducers";
+import { ExperienceActionModel } from "../redux/reducers/Experience";
 
 interface ExperienceProps {
-  experiences: ExperienceModel;
+  experiences: ExperienceActionModel;
   fetchExperiences: Function;
 }
 
-interface ExperienceState {
-  fetching: boolean;
-}
-
-class Experience extends React.Component<ExperienceProps, ExperienceState> {
-  constructor(props: ExperienceProps) {
-    super(props);
-    this.state = { fetching: false };
-  }
-
-  componentDidUpdate(prevProps: ExperienceProps): void {
-    const hasLoaded: boolean =
-      prevProps.experiences.educations.length === 0 &&
-      prevProps.experiences.works.length === 0 &&
-      this.props.experiences.educations.length !== 0 &&
-      this.props.experiences.works.length !== 0;
-
-    if (hasLoaded) {
-      this.setState({ fetching: false });
+class Experience extends React.Component<ExperienceProps> {
+  componentDidMount(): void {
+    if (!this.props.experiences.loaded) {
+      this.props.fetchExperiences();
     }
   }
 
-  componentDidMount(): void {
-    this.setState({ fetching: true });
-    this.props.fetchExperiences();
-  }
-
   render() {
-    const { experiences }: { experiences: ExperienceModel } = this.props;
+    const {
+      educations,
+      works,
+    }: {
+      educations: EducationModel[];
+      works: WorkModel[];
+    } = this.props.experiences;
 
     return (
       <StyledElement name={EXPERIENCE_ROUTE}>
-        {this.state.fetching ? "LOADING" : null}
         <Container>
           <Flex>
             <div className="header">Education</div>
-            {Object.values(experiences.educations).map(
-              (education: EducationModel) => (
-                <Timeline key={education.id}>
-                  <div className="time-and-place">
-                    <div className="place">{education.place}</div>
-                    <div className="time">{education.time}</div>
+            {Object.values(educations).map((education: EducationModel) => (
+              <Timeline key={education.id}>
+                <div className="time-and-place">
+                  <div className="place">{education.place}</div>
+                  <div className="time">{education.time}</div>
+                </div>
+                <div className="image">
+                  <img src={education.imageUrl} alt={education.institution} />
+                </div>
+                <div className="panel">
+                  <div className="role">{education.role}</div>
+                  <div className="institution">
+                    <a
+                      href={education.institutionUrl}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {education.institution}
+                    </a>
                   </div>
-                  <div className="image">
-                    <img src={education.imageUrl} alt={education.institution} />
-                  </div>
-                  <div className="panel">
-                    <div className="role">{education.role}</div>
-                    <div className="institution">
-                      <a
-                        href={education.institutionUrl}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        {education.institution}
-                      </a>
-                    </div>
-                    <div className="grade">{education.grade}</div>
-                    <ul>
-                      {Object.values(education.descriptions).map(
-                        (description: string) => (
-                          <li key={description} className="description">
-                            {description}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                </Timeline>
-              )
-            )}
+                  <div className="grade">{education.grade}</div>
+                  <ul>
+                    {Object.values(education.descriptions).map(
+                      (description: string) => (
+                        <li key={description} className="description">
+                          {description}
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </div>
+              </Timeline>
+            ))}
             <div className="header">Work and Voluntary Experiences</div>
-            {Object.values(experiences.works).map((work: WorkModel) => (
+            {Object.values(works).map((work: WorkModel) => (
               <Timeline key={work.id}>
                 <div className="time-and-place">
                   <div className="place">{work.place}</div>
@@ -130,7 +111,7 @@ class Experience extends React.Component<ExperienceProps, ExperienceState> {
 
 const mapStateToProps = ({
   experiences,
-}: StoreState): { experiences: ExperienceModel } => {
+}: StoreState): { experiences: ExperienceActionModel } => {
   return { experiences };
 };
 

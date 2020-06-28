@@ -1,17 +1,31 @@
 import React from "react";
 import { Element } from "react-scroll";
+import { connect } from "react-redux";
 import styled from "styled-components";
+
 import { ACHIEVEMENT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
 import { AchievementModel } from "../models/Achievement";
+import { fetchAchievements } from "../redux/actions/Achievement";
+import { StoreState } from "../redux/reducers";
+import { AchievementActionModel } from "../redux/reducers/Achievement";
 
 interface AchievementProps {
-  achievements: AchievementModel[];
+  achievements: AchievementActionModel;
+  fetchAchievements: Function;
 }
 
 class Achievement extends React.Component<AchievementProps> {
+  componentDidMount(): void {
+    if (!this.props.achievements.loaded) {
+      this.props.fetchAchievements();
+    }
+  }
+
   render() {
-    const { achievements }: { achievements: AchievementModel[] } = this.props;
+    const {
+      achievements,
+    }: { achievements: AchievementModel[] } = this.props.achievements;
 
     return (
       <StyledElement name={ACHIEVEMENT_ROUTE}>
@@ -47,7 +61,13 @@ class Achievement extends React.Component<AchievementProps> {
   }
 }
 
-export default Achievement;
+const mapStateToProps = ({
+  achievements,
+}: StoreState): { achievements: AchievementActionModel } => {
+  return { achievements };
+};
+
+export default connect(mapStateToProps, { fetchAchievements })(Achievement);
 
 const StyledElement = styled(Element)`
   width: 100%;

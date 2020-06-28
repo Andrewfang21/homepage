@@ -7,7 +7,7 @@ export interface PageDetails {
 
 interface PageLinks {
   Home: PageDetails;
-  About: PageDetails;
+  Profile: PageDetails;
   Experience: PageDetails;
   Project: PageDetails;
   Achievement: PageDetails;
@@ -19,9 +19,9 @@ export const links: PageLinks = {
     to: routes.HOME_ROUTE,
     text: "Home",
   },
-  About: {
-    to: routes.ABOUT_ROUTE,
-    text: "About",
+  Profile: {
+    to: routes.PROFILE_ROUTE,
+    text: "Profile",
   },
   Experience: {
     to: routes.EXPERIENCE_ROUTE,
