@@ -16,7 +16,7 @@ const INITIAL_STATE: ExperienceActionModel = {
 export const experienceReducer = (
   state: ExperienceActionModel = INITIAL_STATE,
   action: ExperienceAction
-) => {
+): ExperienceActionModel => {
   switch (action.type) {
     case ExperienceActionTypes.SET_EXPERIENCES:
       return { ...state, ...action.payload, loading: false, loaded: true };

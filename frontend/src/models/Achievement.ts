@@ -1,7 +1,3 @@
-import tokiImageUrl from "../assets/toki-logo.png";
-import osnImageUrl from "../assets/osn-logo.jpeg";
-import pcrImageUrl from "../assets/pcr-logo.png";
-
 export interface AchievementModel {
   id: number;
   title: string;
@@ -17,7 +13,8 @@ export const achievementData: AchievementModel[] = [
     title: "IOI Training Camp First Stage",
     time: "Sept 2018 - Oct 2018",
     organizer: "Indonesia Computing Olympiad Team",
-    image: tokiImageUrl,
+    image:
+      "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/toki-logo.png",
     descriptions: [
       "Selected as one of the participants in IOI (International Olympiad in Informatics) First Stage Training Camp.",
       "This training camp is held as a preparation to select top students to represent Indonesia in IOI.",
@@ -29,7 +26,8 @@ export const achievementData: AchievementModel[] = [
     title: "National Science Olympiad in Informatics",
     time: "June 2017",
     organizer: "Indonesia Minister of Education and Culture",
-    image: osnImageUrl,
+    image:
+      "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/osn-logo.jpeg",
     descriptions: [
       "National Science Olympiad in Informatics is an annual competition held by Indonesia Minister of Education and Culture to filter the best students mainly in the area of Competitive Programming",
       "The contest consists of two days, where the participants are given 3 tasks to be solved in 5 hours each day. Each task is divided into several subtasks with its own constraints and the number of points",
@@ -41,7 +39,8 @@ export const achievementData: AchievementModel[] = [
     title: "PCR Informatics Olympiad",
     time: "Nov 2017",
     organizer: "Polytechnic Caltex Riau",
-    image: pcrImageUrl,
+    image:
+      "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/pcr-logo.png",
     descriptions: [
       "PCR Informatics Olympiad is an annual competitive programming competition held by Polytechnic Caltex Riau",
       "The contest is divided to two sessions, with 5 problems given in each session to be solved in 3 hours.",

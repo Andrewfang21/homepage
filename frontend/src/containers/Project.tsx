@@ -144,6 +144,10 @@ const Detail = styled.div`
       font-size: 1em;
     }
 
+    @media screen and (max-width: 900px) {
+      padding-left: 10px;
+    }
+
     @media screen and (min-width: 900px) {
       align-items: center;
 

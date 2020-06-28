@@ -7,12 +7,14 @@ import Project from "./Project";
 import Achievement from "./Achievement";
 import Skill from "./Skill";
 import NavigationBar from "../components/Navbar";
+import MobileNavbar from "../components/MobileNavbar";
 
 class Routes extends React.Component {
   render() {
     return (
       <Container>
         <NavigationBar />
+        <MobileNavbar />
         <Home />
         <Profile />
         <Experience />

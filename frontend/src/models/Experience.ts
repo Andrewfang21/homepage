@@ -1,7 +1,3 @@
-import cuhkImageUrl from "../assets/cuhk-logo.png";
-import darmaYudhaImageUrl from "../assets/darma-yudha-logo.png";
-import stoqoImageUrl from "../assets/stoqo-logo.png";
-
 export interface ExperienceModel {
   educations: EducationModel[];
   works: WorkModel[];
@@ -38,7 +34,8 @@ export const experienceData: ExperienceModel = {
       institutionUrl: "https://www.cuhk.edu.hk",
       grade: "Current CGPA: 0.00 / 4.00",
       place: "Hong Kong SAR",
-      imageUrl: cuhkImageUrl,
+      imageUrl:
+        "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/cuhk-logo.png",
       time: "Aug 2018 - Present",
       role: "Computer Science Undergraduate Student",
       descriptions: [
@@ -53,7 +50,8 @@ export const experienceData: ExperienceModel = {
       institutionUrl: "https://darmayudha.com/",
       grade: "CGPA: 92.46 / 100.00",
       place: "Pekanbaru, Indonesia",
-      imageUrl: darmaYudhaImageUrl,
+      imageUrl:
+        "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/darma-yudha-logo.png",
       time: "July 2015 - May 2018",
       role: "Nature Science Stream High School Student",
       descriptions: [
@@ -66,7 +64,8 @@ export const experienceData: ExperienceModel = {
       id: 1,
       company: "STOQO",
       companyUrl: "https://www.stoqo.com/",
-      imageUrl: stoqoImageUrl,
+      imageUrl:
+        "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/stoqo-logo.png",
       place: "Jakarta, Indonesia",
       time: "-",
       role: "Software Engineering Intern",

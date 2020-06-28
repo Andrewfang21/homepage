@@ -16,7 +16,7 @@ const INITIAL_STATE: AchievementActionModel = {
 export const achievementReducer = (
   state: AchievementActionModel = INITIAL_STATE,
   action: AchievementAction
-) => {
+): AchievementActionModel => {
   switch (action.type) {
     case AchievementActionTypes.SET_ACHIEVEMENTS:
       return {

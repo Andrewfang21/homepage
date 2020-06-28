@@ -16,7 +16,7 @@ const INITIAL_STATE: ProjectActionModel = {
 export const projectReducer = (
   state: ProjectActionModel = INITIAL_STATE,
   action: ProjectAction
-) => {
+): ProjectActionModel => {
   switch (action.type) {
     case ProjectActionTypes.SET_PROJECTS:
       return {

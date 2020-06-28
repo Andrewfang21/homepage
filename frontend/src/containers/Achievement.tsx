@@ -43,7 +43,7 @@ class Achievement extends React.Component<AchievementProps> {
                 </div>
                 <div className="organizer">{achievement.organizer}</div>
                 <div className="mobile-time">{achievement.time}</div>
-                <ul>
+                <ul className="descriptions">
                   {Object.values(achievement.descriptions).map(
                     (description: string) => (
                       <li key={description} className="description">
@@ -117,6 +117,10 @@ const Container = styled.div`
 
     @media screen and (max-width: 900px) {
       flex-direction: column;
+
+      .descriptions {
+        padding-left: 10px;
+      }
 
       .description {
         margin: 5px 0;

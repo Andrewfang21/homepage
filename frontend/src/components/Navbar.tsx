@@ -64,6 +64,10 @@ class NavigationBar extends React.Component<NavbarProps, NavbarState> {
 export default NavigationBar;
 
 const Transition = styled.div`
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+
   .active {
     visibility: visible;
     transition: all 500ms ease-in;

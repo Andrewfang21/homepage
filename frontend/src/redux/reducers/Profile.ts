@@ -16,7 +16,7 @@ const INITIAL_STATE: ProfileActionModel = {
 export const profileReducer = (
   state: ProfileActionModel = INITIAL_STATE,
   action: ProfileAction
-) => {
+): ProfileActionModel => {
   switch (action.type) {
     case ProfileActionTypes.SET_PROFILE:
       return {

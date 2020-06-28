@@ -158,6 +158,10 @@ const Timeline = styled.ul`
       flex-direction: row;
       justify-content: space-between;
       padding-bottom: 10px;
+
+      .time {
+        text-align: right;
+      }
     }
   }
 
@@ -199,6 +203,9 @@ const Timeline = styled.ul`
 
   .panel {
     flex: 1;
+    ul {
+      padding-left: 10px;
+    }
   }
 
   .description {
