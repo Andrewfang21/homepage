@@ -1,5 +1,5 @@
+import ExperienceModel from "../../models/Experience";
 import { ExperienceAction, ExperienceActionTypes } from "../actions/types";
-import { ExperienceModel } from "../../models/Experience";
 
 export interface ExperienceActionModel extends ExperienceModel {
   loading: boolean;

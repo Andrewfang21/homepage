@@ -3,9 +3,10 @@ import { Element } from "react-scroll";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import AchievementModel from "../models/Achievement";
+
 import { ACHIEVEMENT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
-import { AchievementModel } from "../models/Achievement";
 import { fetchAchievements } from "../redux/actions/Achievement";
 import { StoreState } from "../redux/reducers";
 import { AchievementActionModel } from "../redux/reducers/Achievement";

@@ -1,4 +1,4 @@
-import { SkillModel } from "../../models/Skill";
+import SkillModel from "../../models/Skill";
 import { SkillActionTypes, SkillAction } from "../actions/types";
 
 export interface SkillActionModel {

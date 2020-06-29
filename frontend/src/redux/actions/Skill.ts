@@ -1,7 +1,9 @@
 import { Dispatch } from "redux";
+
+import SkillModel from "../../models/Skill";
+
 import { SkillActionTypes } from "../actions/types";
 import * as api from "../../api";
-import { SkillModel } from "../../models/Skill";
 
 // Models ------------------------------------------------------------
 export interface LoadingSkills {

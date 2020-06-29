@@ -1,4 +1,4 @@
-export interface ExperienceModel {
+interface ExperienceModel {
   educations: EducationModel[];
   works: WorkModel[];
 }
@@ -34,8 +34,7 @@ export const experienceData: ExperienceModel = {
       institutionUrl: "https://www.cuhk.edu.hk",
       grade: "Current CGPA: 0.00 / 4.00",
       place: "Hong Kong SAR",
-      imageUrl:
-        "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/cuhk-logo.png",
+      imageUrl: "https://i.imgur.com/A9kWbjn.png",
       time: "Aug 2018 - Present",
       role: "Computer Science Undergraduate Student",
       descriptions: [
@@ -50,8 +49,7 @@ export const experienceData: ExperienceModel = {
       institutionUrl: "https://darmayudha.com/",
       grade: "CGPA: 92.46 / 100.00",
       place: "Pekanbaru, Indonesia",
-      imageUrl:
-        "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/darma-yudha-logo.png",
+      imageUrl: "https://i.imgur.com/Pnv9W5b.png",
       time: "July 2015 - May 2018",
       role: "Nature Science Stream High School Student",
       descriptions: [
@@ -64,8 +62,7 @@ export const experienceData: ExperienceModel = {
       id: 1,
       company: "STOQO",
       companyUrl: "https://www.stoqo.com/",
-      imageUrl:
-        "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/stoqo-logo.png",
+      imageUrl: "https://i.imgur.com/9ac9zw6.png",
       place: "Jakarta, Indonesia",
       time: "-",
       role: "Software Engineering Intern",
@@ -76,3 +73,5 @@ export const experienceData: ExperienceModel = {
     },
   ],
 };
+
+export default ExperienceModel;

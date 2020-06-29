@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
+
+import ProjectModel from "../../models/Project";
+
 import { ProjectActionTypes } from "../actions/types";
-import { ProjectModel } from "../../models/Project";
 import * as api from "../../api";
 
 // Models ------------------------------------------------------------

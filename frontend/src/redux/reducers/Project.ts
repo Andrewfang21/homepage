@@ -1,4 +1,4 @@
-import { ProjectModel } from "../../models/Project";
+import ProjectModel from "../../models/Project";
 import { ProjectAction, ProjectActionTypes } from "../actions/types";
 
 export interface ProjectActionModel {

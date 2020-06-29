@@ -1,4 +1,4 @@
-export interface SkillModel {
+interface SkillModel {
   name: string;
   level: number;
 }
@@ -9,3 +9,5 @@ export const skillData: SkillModel[] = [
   { name: "Java", level: 85 },
   { name: "Typescript", level: 88 },
 ];
+
+export default SkillModel;

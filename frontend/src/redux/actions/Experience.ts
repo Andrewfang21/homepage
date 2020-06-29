@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
+
+import ExperienceModel from "../../models/Experience";
+
 import { ExperienceActionTypes } from "../actions/types";
-import { ExperienceModel } from "../../models/Experience";
 import * as api from "../../api";
 
 // Models ------------------------------------------------------------

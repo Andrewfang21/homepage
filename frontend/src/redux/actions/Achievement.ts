@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
+
+import AchievementModel from "../../models/Achievement";
+
 import { AchievementActionTypes } from "../actions/types";
-import { AchievementModel } from "../../models/Achievement";
 import * as api from "../../api";
 
 // Models ------------------------------------------------------------

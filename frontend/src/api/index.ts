@@ -1,8 +1,16 @@
-import { ExperienceModel, experienceData } from "../models/Experience";
-import { ProjectModel, projectData } from "../models/Project";
-import { AchievementModel, achievementData } from "../models/Achievement";
-import { SkillModel, skillData } from "../models/Skill";
-import { ProfileModel, profileData } from "../models/Profile";
+import AchievementModel from "../models/Achievement";
+import ExperienceModel from "../models/Experience";
+import ProfileModel from "../models/Profile";
+import ProjectModel from "../models/Project";
+import SkillModel from "../models/Skill";
+
+import {
+  achievementData,
+  experienceData,
+  profileData,
+  projectData,
+  skillData,
+} from "../models";
 
 export function getExperiences(): ExperienceModel {
   return experienceData;

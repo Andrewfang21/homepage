@@ -3,22 +3,23 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import ProfileModel from "../models/Profile";
+
 import { PROFILE_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
-import { ProfileModel } from "../models/Profile";
-import { fetchProfile } from "../redux/actions/Profile";
+import { getProfile } from "../redux/actions/Profile";
 import { StoreState } from "../redux/reducers";
 import { ProfileActionModel } from "../redux/reducers/Profile";
 
 interface ProfileProps {
   profile: ProfileActionModel;
-  fetchProfile: Function;
+  getProfile: Function;
 }
 
 class Profile extends React.Component<ProfileProps> {
   componentDidMount(): void {
-    if (!this.props.profile.loaded) {
-      this.props.fetchProfile();
+    if (this.props.profile.loaded) {
+      this.props.getProfile();
     }
   }
 
@@ -57,7 +58,7 @@ const mapStateToProps = ({
   return { profile };
 };
 
-export default connect(mapStateToProps, { fetchProfile })(Profile);
+export default connect(mapStateToProps, { getProfile })(Profile);
 
 const StyledElement = styled(Element)`
   width: 100%;

@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-scroll";
 import styled from "styled-components";
 
-import { FONT_COLOR } from "../constants/style";
 import { links, PageDetails } from "../constants/scrollLinks";
+import { FONT_COLOR } from "../constants/style";
 
 interface MobileNavbarState {
   open: boolean;

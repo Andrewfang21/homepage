@@ -1,4 +1,4 @@
-export interface ProjectModel {
+interface ProjectModel {
   id: number;
   title: string;
   link: string;
@@ -13,8 +13,8 @@ export const projectData: ProjectModel[] = [
     title: "StudentApp",
     link: "https://github.com/Andrewfang21/student-app",
     images: [
-      "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/student-app-screenshot-1.png",
-      "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/student-app-screenshot-2.png",
+      "https://i.imgur.com/IiCAPG6.png",
+      "https://i.imgur.com/ixjaqpO.png",
     ],
     descriptions: [
       "An Android application designed for students to manage their daily schedules and track their expenses.",
@@ -27,8 +27,8 @@ export const projectData: ProjectModel[] = [
     title: "CUHK ClubApp",
     link: "https://github.com/AndyPhoenix9879/Cnergy",
     images: [
-      "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/club-app-screenshot-1.png",
-      "https://raw.githubusercontent.com/Andrewfang21/homepage/master/frontend/src/assets/club-app-screenshot-2.png",
+      "https://i.imgur.com/98zuijI.png",
+      "https://i.imgur.com/ePJDl71.png",
     ],
     descriptions: [
       "A web-based application designed to allow students in CUHK to hold and join various clubs and activities.",
@@ -45,3 +45,5 @@ export const projectData: ProjectModel[] = [
     ],
   },
 ];
+
+export default ProjectModel;

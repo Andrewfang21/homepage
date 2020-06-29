@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import ProjectModel from "../models/Project";
+
 import { PROJECT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
-import { ProjectModel } from "../models/Project";
 import { fetchProjects } from "../redux/actions/Project";
 import { StoreState } from "../redux/reducers";
 import { ProjectActionModel } from "../redux/reducers/Project";

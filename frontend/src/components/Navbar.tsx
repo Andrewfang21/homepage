@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-scroll";
 import styled from "styled-components";
+
 import { links, PageDetails } from "../constants/scrollLinks";
 import { SECONDARY_COLOR } from "../constants/style";
 

@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import SkillModel from "../models/Skill";
+
 import { SKILL_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR, SECONDARY_COLOR } from "../constants/style";
-import { SkillModel } from "../models/Skill";
 import { fetchSkills } from "../redux/actions/Skill";
 import { StoreState } from "../redux/reducers";
 import { SkillActionModel } from "../redux/reducers/Skill";

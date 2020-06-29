@@ -1,4 +1,4 @@
-import { AchievementModel } from "../../models/Achievement";
+import AchievementModel from "../../models/Achievement";
 import { AchievementAction, AchievementActionTypes } from "../actions/types";
 
 export interface AchievementActionModel {

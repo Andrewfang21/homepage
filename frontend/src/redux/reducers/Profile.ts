@@ -1,4 +1,4 @@
-import { ProfileModel } from "../../models/Profile";
+import ProfileModel from "../../models/Profile";
 import { ProfileAction, ProfileActionTypes } from "../actions/types";
 
 export interface ProfileActionModel {
@@ -8,7 +8,7 @@ export interface ProfileActionModel {
 }
 
 const INITIAL_STATE: ProfileActionModel = {
-  profile: { name: "", contents: [], imageUrl: "" },
+  profile: { name: "", message: "", contents: [], imageUrl: "" },
   loading: false,
   loaded: false,
 };
@@ -27,6 +27,8 @@ export const profileReducer = (
       };
     case ProfileActionTypes.LOADING_PROFILE:
       return { ...state, loading: true };
+    case ProfileActionTypes.GET_PROFILE:
+      return { ...state, profile: state.profile };
     default:
       return state;
   }
