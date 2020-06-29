@@ -1,8 +1,7 @@
 import { Dispatch } from "redux";
 
-import ProjectModel from "../../models/Project";
-
 import { ProjectActionTypes } from "../actions/types";
+import ProjectModel from "../../models/Project";
 import * as api from "../../api";
 
 // Models ------------------------------------------------------------
@@ -25,8 +24,8 @@ export const setProjects = (payload: ProjectModel[]): SetProjects => ({
   payload: payload,
 });
 
-export const fetchProjects = () => (dispatch: Dispatch) => {
+export const fetchProjects = () => async (dispatch: Dispatch) => {
   dispatch<LoadingProjects>(loadingProjects());
-  const projects: ProjectModel[] = api.getProjects();
+  const projects: ProjectModel[] = await api.getProjects();
   dispatch<SetProjects>(setProjects(projects));
 };

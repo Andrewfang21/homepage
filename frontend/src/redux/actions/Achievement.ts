@@ -27,8 +27,8 @@ export const setAchievements = (
   payload: payload,
 });
 
-export const fetchAchievements = () => (dispatch: Dispatch) => {
+export const fetchAchievements = () => async (dispatch: Dispatch) => {
   dispatch<LoadingAchievements>(loadingAchievements());
-  const achievements: AchievementModel[] = api.getAchievements();
+  const achievements: AchievementModel[] = await api.getAchievements();
   dispatch<SetAchievements>(setAchievements(achievements));
 };

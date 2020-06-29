@@ -1,5 +1,4 @@
 import React from "react";
-import Loadable from "react-loadable";
 import Spinner from "react-spinkit";
 import styled from "styled-components";
 

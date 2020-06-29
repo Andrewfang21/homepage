@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 
 import AchievementModel from "../models/Achievement";
+import Description from "../models/Description";
 
+import LoadingIndicator from "../components/LoadingIndicator";
 import { ACHIEVEMENT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
 import { fetchAchievements } from "../redux/actions/Achievement";
@@ -26,37 +28,46 @@ class Achievement extends React.Component<AchievementProps> {
   render() {
     const {
       achievements,
-    }: { achievements: AchievementModel[] } = this.props.achievements;
+      loading,
+    }: {
+      achievements: AchievementModel[];
+      loading: boolean;
+    } = this.props.achievements;
 
     return (
       <StyledElement name={ACHIEVEMENT_ROUTE}>
-        <Container>
-          <div className="header">Achievements</div>
-          {Object.values(achievements).map((achievement: AchievementModel) => (
-            <div key={achievement.id} className="achievement">
-              <div className="image">
-                <img src={achievement.image} alt={achievement.time} />
-              </div>
-              <div className="detail">
-                <div className="title-and-time">
-                  <span className="title">{achievement.title}</span>
-                  <span className="desktop-time">{achievement.time}</span>
+        {loading && <LoadingIndicator />}
+        {!loading && (
+          <Container>
+            <div className="header">Achievements</div>
+            {Object.values(achievements).map(
+              (achievement: AchievementModel) => (
+                <div key={achievement.id} className="achievement">
+                  <div className="image">
+                    <img src={achievement.imageUrl} alt={achievement.time} />
+                  </div>
+                  <div className="detail">
+                    <div className="title-and-time">
+                      <span className="title">{achievement.title}</span>
+                      <span className="desktop-time">{achievement.time}</span>
+                    </div>
+                    <div className="organizer">{achievement.organizer}</div>
+                    <div className="mobile-time">{achievement.time}</div>
+                    <ul className="descriptions">
+                      {Object.values(achievement.descriptions).map(
+                        (description: Description) => (
+                          <li key={description.id} className="description">
+                            {description.content}
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
                 </div>
-                <div className="organizer">{achievement.organizer}</div>
-                <div className="mobile-time">{achievement.time}</div>
-                <ul className="descriptions">
-                  {Object.values(achievement.descriptions).map(
-                    (description: string) => (
-                      <li key={description} className="description">
-                        {description}
-                      </li>
-                    )
-                  )}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </Container>
+              )
+            )}
+          </Container>
+        )}
       </StyledElement>
     );
   }

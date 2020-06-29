@@ -33,10 +33,6 @@ export const getProfile = (): GetProfile => ({
   type: ProfileActionTypes.GET_PROFILE,
 });
 
-export const getFetchedProfile = () => (dispatch: Dispatch) => {
-  dispatch<GetProfile>(getProfile());
-};
-
 export const fetchProfile = () => (dispatch: Dispatch) => {
   dispatch<LoadingProfile>(loadingProfile());
   const profile: ProfileModel = api.getProfile();

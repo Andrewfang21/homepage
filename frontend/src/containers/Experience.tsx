@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import Description from "../models/Description";
+
 import { EXPERIENCE_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
 import { EducationModel, WorkModel } from "../models/Experience";
@@ -59,9 +61,9 @@ class Experience extends React.Component<ExperienceProps> {
                   <div className="grade">{education.grade}</div>
                   <ul>
                     {Object.values(education.descriptions).map(
-                      (description: string) => (
-                        <li key={description} className="description">
-                          {description}
+                      (description: Description) => (
+                        <li key={description.id} className="description">
+                          {description.content}
                         </li>
                       )
                     )}
@@ -92,9 +94,9 @@ class Experience extends React.Component<ExperienceProps> {
                   </div>
                   <ul>
                     {Object.values(work.descriptions).map(
-                      (description: string) => (
-                        <li key={description} className="description">
-                          {description}
+                      (description: Description) => (
+                        <li key={description.id} className="description">
+                          {description.content}
                         </li>
                       )
                     )}

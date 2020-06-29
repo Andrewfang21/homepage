@@ -33,9 +33,9 @@ class Home extends React.Component<ProfileProps> {
         <Container>
           <Typing cursorClassName="cursor" loop>
             <Typing.Delay ms={1000} />
-            <span className="name">{profile.name}</span>
+            <span className="name">{profile.message}</span>
             <Typing.Delay ms={1000} />
-            <Typing.Backspace count={profile.name.length} />
+            <Typing.Backspace count={profile.message.length} />
           </Typing>
           <div className="description">
             I am a computer science student at The Chinese University of Hong
