@@ -14,8 +14,13 @@ func NewRouter() *gin.Engine {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(cors.New(cors.Config{
-		AllowMethods:     []string{"GET", "OPTIONS"},
-		AllowOrigins:     []string{"http://localhost:3000", "http://localhost:5000", "https://andrewfanggara.herokuapp.com/"},
+		AllowMethods: []string{"GET", "OPTIONS"},
+		AllowOrigins: []string{
+			"http://localhost:3000",
+			"http://localhost:5000",
+			"https://andrewfanggara.herokuapp.com",
+			"http://andrewfanggara.herokuapp.com",
+		},
 		AllowCredentials: true,
 	}))
 
