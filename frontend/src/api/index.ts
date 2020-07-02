@@ -6,9 +6,12 @@ import ProfileModel from "../models/Profile";
 import ProjectModel from "../models/Project";
 import SkillModel from "../models/Skill";
 
+const isOnProduction: boolean = process.env.NODE_ENV === "production";
+
 const http = axios.create({
-  // baseURL: "http://localhost:8080",
-  baseURL: "https://andrewfang-api.herokuapp.com/",
+  baseURL: isOnProduction
+    ? "https://andrewfang-api.herokuapp.com/"
+    : "http://localhost:8080",
 });
 
 export async function getExperiences(): Promise<ExperienceModel> {

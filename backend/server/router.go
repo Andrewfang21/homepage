@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// NewRouter returns the router that handle the endpoints
 func NewRouter() *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(cors.New(cors.Config{
-		AllowMethods: []string{"GET"},
-		// AllowOrigins:     []string{"http://localhost:3000"},
-		AllowAllOrigins:  true,
+		AllowMethods:     []string{"GET", "OPTIONS"},
+		AllowOrigins:     []string{"http://localhost:3000", "http://localhost:5000", "https://andrewfanggara.herokuapp.com/"},
 		AllowCredentials: true,
 	}))
 

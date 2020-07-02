@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// InitServer initializes the server
 func InitServer() error {
 	r := NewRouter()
 	port := fmt.Sprintf(":%s", os.Getenv("PORT"))
