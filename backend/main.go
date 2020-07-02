@@ -4,15 +4,15 @@ import (
 	"homepage/db"
 	"homepage/server"
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load()
+	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("%s\n", err)
-		return
+		os.Setenv("APP_ENV", "production")
 	}
 
 	err = db.CreateConnection()
