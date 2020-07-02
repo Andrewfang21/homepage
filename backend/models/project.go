@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// Project model
 type Project struct {
 	ID           int64                `json:"id" gorm:"column:id"`
 	Title        string               `json:"title" gorm:"column:title"`
@@ -14,6 +15,7 @@ type Project struct {
 	DeletedAt    time.Time            `json:"-" sql:"DEFAULT:null"`
 }
 
+// Project Image model
 type projectImage struct {
 	ID        int64     `json:"id" gorm:"column:id"`
 	ProjectID int64     `json:"-" gorm:"column:project_id"`
@@ -23,6 +25,7 @@ type projectImage struct {
 	DeletedAt time.Time `json:"-" sql:"DEFAULT:null"`
 }
 
+// Project Description model
 type projectDescription struct {
 	ID        int64     `json:"id" gorm:"column:id"`
 	ProjectID int64     `json:"-" gorm:"column:project_id"`

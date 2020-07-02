@@ -6,6 +6,7 @@ const GITHUB: string = "https://github.com/Andrewfang21/";
 const FACEBOOK: string = "https://www.facebook.com/Andrewfanggara21/";
 const INSTAGRAM: string = "https://www.instagram.com/andrew_fanggara/";
 const LINKEDIN: string = "https://www.linkedin.com/in/andrewfang21/";
+const EMAIL: string = "mailto:Andrewfanggara21@gmail.com";
 
 interface SocialMediaModel {
   link: string;
@@ -17,6 +18,7 @@ const SocialMediaData: SocialMediaModel[] = [
   { link: GITHUB, icon: "fa fa-github fa-2x" },
   { link: FACEBOOK, icon: "fa fa-facebook fa-2x" },
   { link: INSTAGRAM, icon: "fa fa-instagram fa-2x" },
+  { link: EMAIL, icon: "fa fa-envelope fa-2x" },
 ];
 
 class SocialMedias extends React.Component {

@@ -71,11 +71,11 @@ const Transition = styled.div`
 
   .active {
     visibility: visible;
-    transition: all 500ms ease-in;
+    transition: all 500ms ease-out;
   }
   .hidden {
     visibility: hidden;
-    transition: all 500ms ease-out;
+    transition: all 500ms ease-in;
     transform: translate(0, -100%);
   }
 `;

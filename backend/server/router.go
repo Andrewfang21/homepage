@@ -22,12 +22,16 @@ func NewRouter() *gin.Engine {
 	handler := controllers.NewController(
 		controllers.NewAchievementController(db),
 		controllers.NewExperienceController(db),
+		controllers.NewProfileController(db),
 		controllers.NewProjectController(db),
+		controllers.NewSkillController(db),
 	)
 
 	router.GET("/achievement", handler.Achievement.GetAchievements)
 	router.GET("/experience", handler.Experience.GetExperiences)
+	router.GET("/profile", handler.Profile.GetProfile)
 	router.GET("/project", handler.Project.GetProjects)
+	router.GET("/skill", handler.Skill.GetSkills)
 
 	return router
 }

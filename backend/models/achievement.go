@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// Achievement model
 type Achievement struct {
 	ID           int64                    `json:"id" gorm:"column:id"`
 	Title        string                   `json:"title" gorm:"column:title"`

@@ -33,8 +33,8 @@ export const getProfile = (): GetProfile => ({
   type: ProfileActionTypes.GET_PROFILE,
 });
 
-export const fetchProfile = () => (dispatch: Dispatch) => {
+export const fetchProfile = () => async (dispatch: Dispatch) => {
   dispatch<LoadingProfile>(loadingProfile());
-  const profile: ProfileModel = api.getProfile();
+  const profile: ProfileModel = await api.getProfile();
   dispatch<SetProfile>(setProfile(profile));
 };

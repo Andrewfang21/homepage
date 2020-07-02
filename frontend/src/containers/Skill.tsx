@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import LoadingIndicator from "../components/LoadingIndicator";
 import SkillModel from "../models/Skill";
 
 import { SKILL_ROUTE } from "../constants/routes";
@@ -38,20 +39,30 @@ class Skill extends React.Component<SkillProps, SkillState> {
 
   render() {
     const { collapsed }: { collapsed: boolean } = this.state;
-    const { skills }: { skills: SkillModel[] } = this.props.skills;
+    const {
+      skills,
+      loading,
+    }: { skills: SkillModel[]; loading: boolean } = this.props.skills;
 
     return (
       <StyledElement name={SKILL_ROUTE}>
         <Container className={`container ${collapsed ? "collapsed" : ""} `}>
           <div className="header">Skills</div>
-          <Skills>
-            {Object.values(skills).map((skill: SkillModel) => (
-              <li key={skill.name} style={{ width: `${skill.level}%` }}>
-                <p>{skill.name}</p>
-                <span>{skill.level}</span>
-              </li>
-            ))}
-          </Skills>
+          {loading && (
+            <div className="loading">
+              <LoadingIndicator />
+            </div>
+          )}
+          {!loading && (
+            <Skills>
+              {Object.values(skills).map((skill: SkillModel) => (
+                <li key={skill.name} style={{ width: `${skill.level}%` }}>
+                  <p>{skill.name}</p>
+                  <span>{skill.level}</span>
+                </li>
+              ))}
+            </Skills>
+          )}
         </Container>
       </StyledElement>
     );
@@ -83,6 +94,11 @@ const Container = styled.div`
     width: 85%;
     font-size: 40px;
     font-weight: bold;
+  }
+
+  .loading {
+    margin-top: 10vh;
+    margin-left: 42vw;
   }
 `;
 

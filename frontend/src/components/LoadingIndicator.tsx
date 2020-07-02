@@ -16,8 +16,7 @@ export default LoadingIndicator;
 
 const Container = styled.div`
   z-index: 100;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 100vh;
+  position: relative;
+  margin: auto;
+  height: 10vh;
 `;

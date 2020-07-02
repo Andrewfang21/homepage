@@ -8,7 +8,13 @@ export interface ProfileActionModel {
 }
 
 const INITIAL_STATE: ProfileActionModel = {
-  profile: { name: "", message: "", contents: [], imageUrl: "" },
+  profile: {
+    name: "",
+    message: "",
+    email: "",
+    imageUrl: "",
+    descriptions: [],
+  },
   loading: false,
   loaded: false,
 };

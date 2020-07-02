@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import LoadingIndicator from "../components/LoadingIndicator";
 import Description from "../models/Description";
 
 import { EXPERIENCE_ROUTE } from "../constants/routes";
@@ -28,82 +29,105 @@ class Experience extends React.Component<ExperienceProps> {
     const {
       educations,
       works,
+      loading,
     }: {
       educations: EducationModel[];
       works: WorkModel[];
+      loading: boolean;
     } = this.props.experiences;
 
     return (
       <StyledElement name={EXPERIENCE_ROUTE}>
         <Container>
           <Flex>
-            <div className="header">Education</div>
-            {Object.values(educations).map((education: EducationModel) => (
-              <Timeline key={education.id}>
-                <div className="time-and-place">
-                  <div className="place">{education.place}</div>
-                  <div className="time">{education.time}</div>
-                </div>
-                <div className="image">
-                  <img src={education.imageUrl} alt={education.institution} />
-                </div>
-                <div className="panel">
-                  <div className="role">{education.role}</div>
-                  <div className="institution">
-                    <a
-                      href={education.institutionUrl}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      {education.institution}
-                    </a>
-                  </div>
-                  <div className="grade">{education.grade}</div>
-                  <ul>
-                    {Object.values(education.descriptions).map(
-                      (description: Description) => (
-                        <li key={description.id} className="description">
-                          {description.content}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
-              </Timeline>
-            ))}
+            <div className="header">Educations</div>
+            {loading && (
+              <div className="loading">
+                <LoadingIndicator />
+              </div>
+            )}
+            {!loading && (
+              <div>
+                {Object.values(educations).map((education: EducationModel) => (
+                  <Timeline key={education.id}>
+                    <div className="time-and-place">
+                      <div className="place">{education.place}</div>
+                      <div className="time">{education.time}</div>
+                    </div>
+                    <div className="image">
+                      <img
+                        src={education.imageUrl}
+                        alt={education.institution}
+                      />
+                    </div>
+                    <div className="panel">
+                      <div className="role">{education.role}</div>
+                      <div className="institution">
+                        <a
+                          href={education.institutionUrl}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {education.institution}
+                        </a>
+                      </div>
+                      <div className="grade">{education.grade}</div>
+                      <ul>
+                        {Object.values(education.descriptions).map(
+                          (description: Description) => (
+                            <li key={description.id} className="description">
+                              {description.content}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  </Timeline>
+                ))}
+              </div>
+            )}
             <div className="header">Work and Voluntary Experiences</div>
-            {Object.values(works).map((work: WorkModel) => (
-              <Timeline key={work.id}>
-                <div className="time-and-place">
-                  <div className="place">{work.place}</div>
-                  <div className="time">{work.time}</div>
-                </div>
-                <div className="image">
-                  <img src={work.imageUrl} alt={work.company} />
-                </div>
-                <div className="panel">
-                  <div className="role">{work.role}</div>
-                  <div className="institution">
-                    <a
-                      href={work.companyUrl}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      {work.company}
-                    </a>
-                  </div>
-                  <ul>
-                    {Object.values(work.descriptions).map(
-                      (description: Description) => (
-                        <li key={description.id} className="description">
-                          {description.content}
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
-              </Timeline>
-            ))}
+            {loading && (
+              <div className="loading">
+                <LoadingIndicator />
+              </div>
+            )}
+            {!loading && (
+              <div>
+                {Object.values(works).map((work: WorkModel) => (
+                  <Timeline key={work.id}>
+                    <div className="time-and-place">
+                      <div className="place">{work.place}</div>
+                      <div className="time">{work.time}</div>
+                    </div>
+                    <div className="image">
+                      <img src={work.imageUrl} alt={work.company} />
+                    </div>
+                    <div className="panel">
+                      <div className="role">{work.role}</div>
+                      <div className="institution">
+                        <a
+                          href={work.companyUrl}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {work.company}
+                        </a>
+                      </div>
+                      <ul>
+                        {Object.values(work.descriptions).map(
+                          (description: Description) => (
+                            <li key={description.id} className="description">
+                              {description.content}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  </Timeline>
+                ))}
+              </div>
+            )}
           </Flex>
         </Container>
       </StyledElement>
@@ -132,6 +156,11 @@ const StyledElement = styled(Element)`
 
 const Container = styled.div`
   width: 85%;
+
+  .loading {
+    margin-top: 10vh;
+    margin-left: 42vw;
+  }
 `;
 
 const Flex = styled.div`

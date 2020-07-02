@@ -2,11 +2,13 @@ package models
 
 import "time"
 
+// Experience model
 type Experience struct {
 	Educations []Education `json:"educations"`
 	Works      []Work      `json:"works"`
 }
 
+// Education model
 type Education struct {
 	ID             int64                  `json:"id" gorm:"column:id"`
 	Institution    string                 `json:"institution" gorm:"column:institution"`
@@ -31,6 +33,7 @@ type educationDescription struct {
 	DeletedAt   time.Time `json:"-" sql:"DEFAULT:null"`
 }
 
+// Work model
 type Work struct {
 	ID           int64             `json:"id" gorm:"column:id"`
 	Company      string            `json:"company" gorm:"column:company"`

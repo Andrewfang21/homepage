@@ -6,10 +6,9 @@ import ProfileModel from "../models/Profile";
 import ProjectModel from "../models/Project";
 import SkillModel from "../models/Skill";
 
-import { profileData, skillData } from "../models";
-
 const http = axios.create({
-  baseURL: "http://localhost:8080",
+  // baseURL: "http://localhost:8080",
+  baseURL: "https://andrewfang-api.herokuapp.com/",
 });
 
 export async function getExperiences(): Promise<ExperienceModel> {
@@ -27,10 +26,12 @@ export async function getAchievements(): Promise<AchievementModel[]> {
   return response.data;
 }
 
-export function getSkills(): SkillModel[] {
-  return skillData;
+export async function getSkills(): Promise<SkillModel[]> {
+  const response = await http.get("/skill");
+  return response.data;
 }
 
-export function getProfile(): ProfileModel {
-  return profileData;
+export async function getProfile(): Promise<ProfileModel> {
+  const response = await http.get("/profile");
+  return response.data;
 }

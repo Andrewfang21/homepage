@@ -3,10 +3,10 @@ import { Element } from "react-scroll";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+import LoadingIndicator from "../components/LoadingIndicator";
 import AchievementModel from "../models/Achievement";
 import Description from "../models/Description";
 
-import LoadingIndicator from "../components/LoadingIndicator";
 import { ACHIEVEMENT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
 import { fetchAchievements } from "../redux/actions/Achievement";
@@ -36,38 +36,44 @@ class Achievement extends React.Component<AchievementProps> {
 
     return (
       <StyledElement name={ACHIEVEMENT_ROUTE}>
-        {loading && <LoadingIndicator />}
-        {!loading && (
-          <Container>
-            <div className="header">Achievements</div>
-            {Object.values(achievements).map(
-              (achievement: AchievementModel) => (
-                <div key={achievement.id} className="achievement">
-                  <div className="image">
-                    <img src={achievement.imageUrl} alt={achievement.time} />
-                  </div>
-                  <div className="detail">
-                    <div className="title-and-time">
-                      <span className="title">{achievement.title}</span>
-                      <span className="desktop-time">{achievement.time}</span>
+        <Container>
+          <div className="header">Achievements</div>
+          {loading && (
+            <div className="loading">
+              <LoadingIndicator />
+            </div>
+          )}
+          {!loading && (
+            <div>
+              {Object.values(achievements).map(
+                (achievement: AchievementModel) => (
+                  <div key={achievement.id} className="achievement">
+                    <div className="image">
+                      <img src={achievement.imageUrl} alt={achievement.time} />
                     </div>
-                    <div className="organizer">{achievement.organizer}</div>
-                    <div className="mobile-time">{achievement.time}</div>
-                    <ul className="descriptions">
-                      {Object.values(achievement.descriptions).map(
-                        (description: Description) => (
-                          <li key={description.id} className="description">
-                            {description.content}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                    <div className="detail">
+                      <div className="title-and-time">
+                        <span className="title">{achievement.title}</span>
+                        <span className="desktop-time">{achievement.time}</span>
+                      </div>
+                      <div className="organizer">{achievement.organizer}</div>
+                      <div className="mobile-time">{achievement.time}</div>
+                      <ul className="descriptions">
+                        {Object.values(achievement.descriptions).map(
+                          (description: Description) => (
+                            <li key={description.id} className="description">
+                              {description.content}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-              )
-            )}
-          </Container>
-        )}
+                )
+              )}
+            </div>
+          )}
+        </Container>
       </StyledElement>
     );
   }
@@ -100,6 +106,11 @@ const Container = styled.div`
     margin: 30px 0;
     font-size: 40px;
     font-weight: bold;
+  }
+
+  .loading {
+    margin-top: 10vh;
+    margin-left: 42vw;
   }
 
   .achievement {

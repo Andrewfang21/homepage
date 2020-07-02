@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import LoadingIndicator from "../components/LoadingIndicator";
 import ProfileModel from "../models/Profile";
 
 import { PROFILE_ROUTE } from "../constants/routes";
@@ -10,6 +11,7 @@ import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
 import { getProfile } from "../redux/actions/Profile";
 import { StoreState } from "../redux/reducers";
 import { ProfileActionModel } from "../redux/reducers/Profile";
+import Description from "../models/Description";
 
 interface ProfileProps {
   profile: ProfileActionModel;
@@ -24,28 +26,40 @@ class Profile extends React.Component<ProfileProps> {
   }
 
   render() {
-    const { profile }: { profile: ProfileModel } = this.props.profile;
+    const {
+      profile,
+      loading,
+    }: { profile: ProfileModel; loading: boolean } = this.props.profile;
 
     return (
       <StyledElement name={PROFILE_ROUTE}>
         <Container>
-          <Flex>
-            <Image>
-              <img
-                className="image"
-                src={profile.imageUrl}
-                alt={profile.name}
-              />
-            </Image>
-            <Detail>
-              <div className="title">About Me</div>
-              {Object.values(profile.contents).map((content: string) => (
-                <div key={content} className="content">
-                  {content}
-                </div>
-              ))}
-            </Detail>
-          </Flex>
+          {loading && (
+            <div className="loading">
+              <LoadingIndicator />
+            </div>
+          )}
+          {!loading && (
+            <Flex>
+              <Image>
+                <img
+                  className="image"
+                  src={profile.imageUrl}
+                  alt={profile.name}
+                />
+              </Image>
+              <Detail>
+                <div className="title">About Me</div>
+                {Object.values(profile.descriptions).map(
+                  (description: Description) => (
+                    <div key={description.id} className="description">
+                      {description.content}
+                    </div>
+                  )
+                )}
+              </Detail>
+            </Flex>
+          )}
         </Container>
       </StyledElement>
     );
@@ -73,6 +87,11 @@ const StyledElement = styled(Element)`
 
 const Container = styled.div`
   width: 85%;
+
+  .loading {
+    margin-top: 10vh;
+    margin-left: 42vw;
+  }
 `;
 
 const Detail = styled.div`
@@ -89,7 +108,7 @@ const Detail = styled.div`
     }
   }
 
-  .content {
+  .description {
     padding-left: 20px;
     margin-bottom: 30px;
     text-align: justify;

@@ -4,6 +4,7 @@ import { Element } from "react-scroll";
 import Typing from "react-typing-animation";
 import styled from "styled-components";
 
+import LoadingIndicator from "../components/LoadingIndicator";
 import SocialMedias from "../components/SocialMedias";
 import ProfileModel from "../models/Profile";
 
@@ -26,23 +27,26 @@ class Home extends React.Component<ProfileProps> {
   }
 
   render() {
-    const { profile }: { profile: ProfileModel } = this.props.profile;
+    const {
+      profile,
+      loading,
+    }: { profile: ProfileModel; loading: boolean } = this.props.profile;
 
     return (
       <StyledElement name={HOME_ROUTE}>
-        <Container>
-          <Typing cursorClassName="cursor" loop>
-            <Typing.Delay ms={1000} />
-            <span className="name">{profile.message}</span>
-            <Typing.Delay ms={1000} />
-            <Typing.Backspace count={profile.message.length} />
-          </Typing>
-          <div className="description">
-            I am a computer science student at The Chinese University of Hong
-            Kong
-          </div>
-          <SocialMedias />
-        </Container>
+        {loading && <LoadingIndicator />}
+        {!loading && (
+          <Container>
+            <Typing cursorClassName="cursor" loop>
+              <Typing.Delay ms={1000} />
+              <span className="name">{profile.name}</span>
+              <Typing.Delay ms={1000} />
+              <Typing.Backspace count={profile.name.length} />
+            </Typing>
+            <div className="description">{profile.message}</div>
+            <SocialMedias />
+          </Container>
+        )}
       </StyledElement>
     );
   }

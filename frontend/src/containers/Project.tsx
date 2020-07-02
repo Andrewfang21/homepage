@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
 
+import LoadingIndicator from "../components/LoadingIndicator";
+
 import { PROJECT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
 import Description from "../models/Description";
@@ -24,43 +26,61 @@ class Project extends React.Component<ProjectProps> {
   }
 
   render() {
-    const { projects }: { projects: ProjectModel[] } = this.props.projects;
+    const {
+      projects,
+      loading,
+    }: { projects: ProjectModel[]; loading: boolean } = this.props.projects;
 
     return (
       <StyledElement name={PROJECT_ROUTE}>
         <Container>
           <div className="header">Projects</div>
-          {Object.values(projects).map((project: ProjectModel) => (
-            <Detail key={project.id}>
-              <div className="title">
-                {project.title}
-                <span className="github">
-                  <a
-                    href={project.link}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    <i className="fa fa-github"></i>
-                  </a>
-                </span>
-              </div>
-              <div className="image">
-                {Object.values(project.imageUrls).map((image: ImageModel) => (
-                  <img key={image.id} src={image.url} alt="{project.title}-1" />
-                ))}
-              </div>
-              <ul className="descriptions">
-                {Object.values(project.descriptions).map(
-                  (description: Description) => (
-                    <li key={description.id}>{description.content}</li>
-                  )
-                )}
-                <li className="tech-stack">
-                  <span>Tech Stacks: {project.techStack}</span>
-                </li>
-              </ul>
-            </Detail>
-          ))}
+          {loading && (
+            <div className="loading">
+              <LoadingIndicator />
+            </div>
+          )}
+          {!loading && (
+            <div>
+              {Object.values(projects).map((project: ProjectModel) => (
+                <Detail key={project.id}>
+                  <div className="title">
+                    {project.title}
+                    <span className="github">
+                      <a
+                        href={project.link}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <i className="fa fa-github"></i>
+                      </a>
+                    </span>
+                  </div>
+                  <div className="image">
+                    {Object.values(project.imageUrls).map(
+                      (image: ImageModel) => (
+                        <img
+                          key={image.id}
+                          src={image.url}
+                          alt="{project.title}-1"
+                        />
+                      )
+                    )}
+                  </div>
+                  <ul className="descriptions">
+                    {Object.values(project.descriptions).map(
+                      (description: Description) => (
+                        <li key={description.id}>{description.content}</li>
+                      )
+                    )}
+                    <li className="tech-stack">
+                      <span>Tech Stacks: {project.techStack}</span>
+                    </li>
+                  </ul>
+                </Detail>
+              ))}
+            </div>
+          )}
         </Container>
       </StyledElement>
     );
@@ -92,6 +112,11 @@ const Container = styled.div`
     width: 85%;
     font-size: 40px;
     font-weight: bold;
+  }
+
+  .loading {
+    margin-top: 10vh;
+    margin-left: 42vw;
   }
 `;
 
