@@ -3,4 +3,13 @@ import thunk from "redux-thunk";
 import logger from "redux-logger";
 import { reducers } from "./reducers";
 
-export const store = createStore(reducers, applyMiddleware(thunk, logger));
+const isOnProduction: boolean = process.env.NODE_ENV === "production";
+
+let store: any;
+if (isOnProduction) {
+  store = createStore(reducers, applyMiddleware(thunk));
+} else {
+  store = createStore(reducers, applyMiddleware(thunk, logger));
+}
+
+export default store;
