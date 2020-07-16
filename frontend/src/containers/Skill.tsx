@@ -103,7 +103,6 @@ const Container = styled.div`
 const Skills = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
   margin: 1em;
 
   @media screen and (max-width: 576px) {
