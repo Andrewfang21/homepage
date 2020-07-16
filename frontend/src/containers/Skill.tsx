@@ -17,28 +17,22 @@ interface SkillProps {
   fetchSkills: Function;
 }
 
-interface SkillState {
-  collapsed: boolean;
-}
+const skillCategories: string[] = [
+  "Experienced",
+  "Familiar",
+  "Proficient",
+  "Methods",
+  "Languages",
+];
 
-class Skill extends React.Component<SkillProps, SkillState> {
-  constructor(props: SkillProps) {
-    super(props);
-    this.state = { collapsed: true };
-  }
-
+class Skill extends React.Component<SkillProps> {
   componentDidMount() {
     if (!this.props.skills.loaded) {
       this.props.fetchSkills();
     }
-
-    setTimeout(() => {
-      this.setState({ collapsed: false });
-    }, 1000);
   }
 
   render() {
-    const { collapsed }: { collapsed: boolean } = this.state;
     const {
       skills,
       loading,
@@ -46,7 +40,7 @@ class Skill extends React.Component<SkillProps, SkillState> {
 
     return (
       <StyledElement name={SKILL_ROUTE}>
-        <Container className={`container ${collapsed ? "collapsed" : ""} `}>
+        <Container>
           <div className="header">Skills</div>
           {loading && (
             <div className="loading">
@@ -55,11 +49,15 @@ class Skill extends React.Component<SkillProps, SkillState> {
           )}
           {!loading && (
             <Skills>
-              {Object.values(skills).map((skill: SkillModel) => (
-                <li key={skill.name} style={{ width: `${skill.level}%` }}>
-                  <p>{skill.name}</p>
-                  <span>{skill.level}</span>
-                </li>
+              {skillCategories.map((category: string) => (
+                <SkillSection>
+                  <div className="section-title">{category}</div>
+                  {Object.values(skills).map((skill: SkillModel) => (
+                    <div className="section-content">
+                      {skill.label === category && skill.name}
+                    </div>
+                  ))}
+                </SkillSection>
               ))}
             </Skills>
           )}
@@ -102,39 +100,33 @@ const Container = styled.div`
   }
 `;
 
-const Skills = styled.ul`
-  margin: 0 30px 5vh 30px;
-  padding: 0;
+const Skills = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin: 1em;
 
-  li {
-    display: block;
-    position: relative;
-    background-color: #888;
-    color: #fff;
-    margin: 10px 0;
-    transition: width 300ms ease-in-out;
+  @media screen and (max-width: 576px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
 
-    background-color: ${SECONDARY_COLOR};
+const SkillSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: start;
+  align-items: flex-start;
+  margin-bottom: 2rem;
 
-    .collapsed & {
-      width: 0 !important;
-    }
+  .section-title {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: ${SECONDARY_COLOR};
+  }
 
-    p {
-      padding: 10px;
-      margin: 0;
-      font-weight: bold;
-    }
-    span {
-      position: absolute;
-      right: 10px;
-      display: inline-block;
-      width: 30px;
-      top: 11px;
-      text-align: right;
-      font-weight: normal;
-      color: #fff;
-      font-size: 11px;
-    }
+  .section-content {
+    padding-left: 1em;
   }
 `;

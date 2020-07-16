@@ -252,7 +252,7 @@ const Timeline = styled.ul`
   }
 
   @media screen and (max-width: 900px) {
-    margin: 0;
+    margin-bottom: 2em;
     padding: 0;
     flex-direction: column;
   }

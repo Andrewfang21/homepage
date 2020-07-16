@@ -31,7 +31,7 @@ func (s *SkillController) GetSkills(c *gin.Context) {
 	var skills []models.Skill
 	s.ormer.LogMode(true)
 
-	err := s.ormer.Find(&skills).Error
+	err := s.ormer.Order("label").Find(&skills).Error
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err,

@@ -1,7 +1,7 @@
 interface SkillModel {
   id: number;
   name: string;
-  level: number;
+  label: string;
 }
 
 export default SkillModel;
