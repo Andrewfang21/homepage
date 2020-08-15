@@ -7,8 +7,7 @@ import LoadingIndicator from "../components/LoadingIndicator";
 
 import { PROJECT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
-import Description from "../models/Description";
-import ProjectModel, { ImageModel } from "../models/Project";
+import ProjectModel from "../models/Project";
 import { fetchProjects } from "../redux/actions/Project";
 import { StoreState } from "../redux/reducers";
 import { ProjectActionModel } from "../redux/reducers/Project";
@@ -57,20 +56,15 @@ class Project extends React.Component<ProjectProps> {
                     </span>
                   </div>
                   <div className="image">
-                    {Object.values(project.imageUrls).map(
-                      (image: ImageModel) => (
-                        <img
-                          key={image.id}
-                          src={image.url}
-                          alt="{project.title}-1"
-                        />
-                      )
-                    )}
+                    {project.imageUrls != null &&
+                      Object.values(project.imageUrls).map((image: string) => (
+                        <img key={image} src={image} alt={project.title} />
+                      ))}
                   </div>
                   <ul className="descriptions">
                     {Object.values(project.descriptions).map(
-                      (description: Description) => (
-                        <li key={description.id}>{description.content}</li>
+                      (description: string) => (
+                        <li key={description}>{description}</li>
                       )
                     )}
                     <li className="tech-stack">

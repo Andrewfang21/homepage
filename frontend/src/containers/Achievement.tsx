@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import LoadingIndicator from "../components/LoadingIndicator";
 import AchievementModel from "../models/Achievement";
-import Description from "../models/Description";
 
 import { ACHIEVEMENT_ROUTE } from "../constants/routes";
 import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
@@ -60,9 +59,9 @@ class Achievement extends React.Component<AchievementProps> {
                       <div className="mobile-time">{achievement.time}</div>
                       <ul className="descriptions">
                         {Object.values(achievement.descriptions).map(
-                          (description: Description) => (
-                            <li key={description.id} className="description">
-                              {description.content}
+                          (description: string) => (
+                            <li key={description} className="description">
+                              {description}
                             </li>
                           )
                         )}

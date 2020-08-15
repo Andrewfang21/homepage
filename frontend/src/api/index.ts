@@ -15,22 +15,24 @@ const http = axios.create({
 });
 
 export async function getExperiences(): Promise<ExperienceModel> {
-  const response = await http.get("/experience");
+  const response = await http.get("/experiences");
   return response.data;
 }
 
 export async function getProjects(): Promise<ProjectModel[]> {
-  const response = await http.get("/project");
+  const response = await http.get("/projects");
+  console.log("These are the projects");
+  console.log(response.data);
   return response.data;
 }
 
 export async function getAchievements(): Promise<AchievementModel[]> {
-  const response = await http.get("/achievement");
+  const response = await http.get("/achievements");
   return response.data;
 }
 
 export async function getSkills(): Promise<SkillModel[]> {
-  const response = await http.get("/skill");
+  const response = await http.get("/skills");
   return response.data;
 }
 

@@ -11,7 +11,6 @@ import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
 import { getProfile } from "../redux/actions/Profile";
 import { StoreState } from "../redux/reducers";
 import { ProfileActionModel } from "../redux/reducers/Profile";
-import Description from "../models/Description";
 
 interface ProfileProps {
   profile: ProfileActionModel;
@@ -51,9 +50,9 @@ class Profile extends React.Component<ProfileProps> {
               <Detail>
                 <div className="title">About Me</div>
                 {Object.values(profile.descriptions).map(
-                  (description: Description) => (
-                    <div key={description.id} className="description">
-                      {description.content}
+                  (description: string) => (
+                    <div key={description} className="description">
+                      {description}
                     </div>
                   )
                 )}

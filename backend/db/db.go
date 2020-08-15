@@ -1,38 +1,29 @@
 package db
 
 import (
-	"homepage/config"
+	"database/sql"
 	"os"
 
-	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
 )
 
-var db *gorm.DB
+// Db is the database handler
+var Db *sql.DB
 
+// CreateConnection establish connection with the database
 func CreateConnection() error {
-	env := os.Getenv("APP_ENV")
+	psqlString := os.Getenv("DATABASE_URL")
 
-	var psqlInfo string
-	if env == "development" {
-		psqlInfo = config.GetDBUrl()
-	} else {
-		// For heroku environment
-		psqlInfo = os.Getenv("DATABASE_URL")
-	}
-
-	var err error
-	db, err = gorm.Open("postgres", psqlInfo)
+	db, err := sql.Open("postgres", psqlString)
 	if err != nil {
 		return err
 	}
+
+	Db = db
 	return nil
 }
 
+// CloseConnection is used to close the database connection
 func CloseConnection() {
-	db.Close()
-}
-
-func GetDB() *gorm.DB {
-	return db
+	Db.Close()
 }

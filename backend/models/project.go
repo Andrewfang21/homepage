@@ -1,36 +1,121 @@
 package models
 
-import "time"
+import (
+	"database/sql"
+)
 
 // Project model
 type Project struct {
-	ID           int64                `json:"id" gorm:"column:id"`
-	Title        string               `json:"title" gorm:"column:title"`
-	Link         string               `json:"link" gorm:"column:link"`
-	TechStacks   string               `json:"techStack" gorm:"column:tech_stacks"`
-	ImageURLs    []projectImage       `json:"imageUrls"`
-	Descriptions []projectDescription `json:"descriptions"`
-	CreatedAt    time.Time            `json:"-" sql:"DEFAULT:current_timestamp"`
-	UpdatedAt    time.Time            `json:"-" sql:"DEFAULT:current_timestamp"`
-	DeletedAt    time.Time            `json:"-" sql:"DEFAULT:null"`
+	ID           int64    `json:"id"`
+	Title        string   `json:"title"`
+	Link         string   `json:"link"`
+	TechStacks   string   `json:"techStack"`
+	ImageURLs    []string `json:"imageUrls"`
+	Descriptions []string `json:"descriptions"`
 }
 
-// Project Image model
-type projectImage struct {
-	ID        int64     `json:"id" gorm:"column:id"`
-	ProjectID int64     `json:"-" gorm:"column:project_id"`
-	ImageURL  string    `json:"url" gorm:"column:image_link"`
-	CreatedAt time.Time `json:"-" sql:"DEFAULT:current_timestamp"`
-	UpdatedAt time.Time `json:"-" sql:"DEFAULT:current_timestamp"`
-	DeletedAt time.Time `json:"-" sql:"DEFAULT:null"`
+type projectOrmer struct {
+	db *sql.DB
 }
 
-// Project Description model
-type projectDescription struct {
-	ID        int64     `json:"id" gorm:"column:id"`
-	ProjectID int64     `json:"-" gorm:"column:project_id"`
-	Content   string    `json:"content" gorm:"column:content"`
-	CreatedAt time.Time `json:"-" sql:"DEFAULT:current_timestamp"`
-	UpdatedAt time.Time `json:"-" sql:"DEFAULT:current_timestamp"`
-	DeletedAt time.Time `json:"-" sql:"DEFAULT:null"`
+// ProjectOrmer defines the operations of projectOrmer
+type ProjectOrmer interface {
+	GetAll() ([]*Project, error)
+	GetImageUrls(projectID int64) ([]string, error)
+	GetDescriptions(projectID int64) ([]string, error)
+}
+
+// NewProjectOrmer returns an instance of projectOrmer
+func NewProjectOrmer(db *sql.DB) ProjectOrmer {
+	return &projectOrmer{db: db}
+}
+
+func (o *projectOrmer) GetAll() ([]*Project, error) {
+	queryString := `
+		SELECT
+			id, title, link, tech_stacks
+		FROM projects
+		ORDER BY id DESC
+	`
+	queryResult, err := o.db.Query(queryString)
+	if err != nil {
+		return nil, err
+	}
+	defer queryResult.Close()
+
+	var projects []*Project
+	for queryResult.Next() {
+		var project Project
+		err := queryResult.Scan(
+			&project.ID,
+			&project.Title,
+			&project.Link,
+			&project.TechStacks,
+		)
+		if err != nil {
+			return nil, err
+		}
+
+		project.ImageURLs, err = o.GetImageUrls(project.ID)
+		if err != nil {
+			return nil, err
+		}
+		project.Descriptions, err = o.GetDescriptions(project.ID)
+		if err != nil {
+			return nil, err
+		}
+
+		projects = append(projects, &project)
+	}
+
+	return projects, nil
+}
+
+func (o *projectOrmer) GetImageUrls(projectID int64) ([]string, error) {
+	queryString := `
+		SELECT image_link
+		FROM project_images
+		WHERE project_id = $1
+	`
+	queryResult, err := o.db.Query(queryString, projectID)
+	if err != nil {
+		return nil, err
+	}
+
+	var urls []string
+	for queryResult.Next() {
+		var url string
+		err := queryResult.Scan(&url)
+		if err != nil {
+			return nil, err
+		}
+		urls = append(urls, url)
+	}
+
+	return urls, nil
+}
+
+func (o *projectOrmer) GetDescriptions(projectID int64) ([]string, error) {
+	queryString := `
+		SELECT content
+		FROM project_descriptions
+		WHERE project_id = $1
+		ORDER BY id ASC
+	`
+	queryResult, err := o.db.Query(queryString, projectID)
+	if err != nil {
+		return nil, err
+	}
+
+	var descriptions []string
+	for queryResult.Next() {
+		var description string
+		err := queryResult.Scan(&description)
+		if err != nil {
+			return nil, err
+		}
+		descriptions = append(descriptions, description)
+	}
+
+	return descriptions, nil
 }

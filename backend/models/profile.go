@@ -1,31 +1,78 @@
 package models
 
-import "time"
+import "database/sql"
 
 // Profile model
 type Profile struct {
-	ID           int64                `json:"-" gorm:"column:id"`
-	Name         string               `json:"name" gorm:"column:name"`
-	Message      string               `json:"message" gorm:"column:message"`
-	ImageURL     string               `json:"imageUrl" gorm:"column:image_url"`
-	Email        string               `json:"email" gorm:"column:email"`
-	Descriptions []ProfileDescription `json:"descriptions"`
-	CreatedAt    time.Time            `json:"-" sql:"DEFAULT:current_timestamp"`
-	UpdatedAt    time.Time            `json:"-" sql:"DEFAULT:current_timestamp"`
-	DeletedAt    time.Time            `json:"-" sql:"DEFAULT:null"`
+	ID           int64    `json:"-"`
+	Name         string   `json:"name"`
+	Message      string   `json:"message"`
+	ImageURL     string   `json:"imageUrl"`
+	Email        string   `json:"email"`
+	Descriptions []string `json:"descriptions"`
 }
 
-// ProfileDescription is the description of Profile model
-type ProfileDescription struct {
-	ID        int64     `json:"id" gorm:"column:id"`
-	UserID    int64     `json:"-" gorm:"column:user_id"`
-	Content   string    `json:"content" column:"content"`
-	CreatedAt time.Time `json:"-" sql:"DEFAULT:current_timestamp"`
-	UpdatedAt time.Time `json:"-" sql:"DEFAULT:current_timestamp"`
-	DeletedAt time.Time `json:"-" sql:"DEFAULT:null"`
+type profileOrmer struct {
+	db *sql.DB
 }
 
-// TableName is used to singularize the `profile` table name
-func (Profile) TableName() string {
-	return "profile"
+// ProfileOrmer defines the operations of profileOrmer
+type ProfileOrmer interface {
+	Get() (*Profile, error)
+	GetDescriptions() ([]string, error)
+}
+
+// NewProfileOrmer returns an instance of profileOrmer
+func NewProfileOrmer(db *sql.DB) ProfileOrmer {
+	return &profileOrmer{db: db}
+}
+
+func (o *profileOrmer) Get() (*Profile, error) {
+	queryString := `
+		SELECT name, message, image_url, email
+		FROM profile
+	`
+	queryResult := o.db.QueryRow(queryString)
+
+	var profile Profile
+	err := queryResult.Scan(
+		&profile.Name,
+		&profile.Message,
+		&profile.ImageURL,
+		&profile.Email,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	profile.Descriptions, err = o.GetDescriptions()
+	if err != nil {
+		return nil, err
+	}
+
+	return &profile, nil
+}
+
+func (o *profileOrmer) GetDescriptions() ([]string, error) {
+	queryString := `
+		SELECT content
+		FROM profile_descriptions
+		ORDER BY id ASC
+	`
+	queryResult, err := o.db.Query(queryString)
+	if err != nil {
+		return nil, err
+	}
+
+	var descriptions []string
+	for queryResult.Next() {
+		var description string
+		err := queryResult.Scan(&description)
+		if err != nil {
+			return nil, err
+		}
+		descriptions = append(descriptions, description)
+	}
+
+	return descriptions, nil
 }

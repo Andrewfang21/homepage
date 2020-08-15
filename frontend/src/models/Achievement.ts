@@ -1,12 +1,10 @@
-import Description from "./Description";
-
 interface AchievementModel {
   id: number;
   title: string;
   organizer: string;
   time: string;
   imageUrl: string;
-  descriptions: Description[];
+  descriptions: string[];
 }
 
 export default AchievementModel;

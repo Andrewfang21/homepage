@@ -1,5 +1,3 @@
-import Description from "./Description";
-
 interface ExperienceModel {
   educations: EducationModel[];
   works: WorkModel[];
@@ -14,7 +12,7 @@ export interface EducationModel {
   imageUrl: string;
   time: string;
   role: string;
-  descriptions: Description[];
+  descriptions: string[];
 }
 
 export interface WorkModel {
@@ -25,7 +23,7 @@ export interface WorkModel {
   place: string;
   time: string;
   role: string;
-  descriptions: Description[];
+  descriptions: string[];
 }
 
 export default ExperienceModel;
