@@ -45,7 +45,7 @@ class Project extends React.Component<ProjectProps> {
                 <Detail key={project.id}>
                   <div className="title">
                     {project.title}
-                    <span className="github">
+                    <span className="link">
                       <a
                         href={project.link}
                         rel="noopener noreferrer"
@@ -54,6 +54,17 @@ class Project extends React.Component<ProjectProps> {
                         <i className="fa fa-github"></i>
                       </a>
                     </span>
+                    {project.demoUrl != null && (
+                      <span className="link">
+                        <a
+                          href={project.demoUrl}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          <i className="fa fa-play"></i>
+                        </a>
+                      </span>
+                    )}
                   </div>
                   <div className="image">
                     {project.imageUrls != null &&
@@ -125,9 +136,9 @@ const Detail = styled.div`
     margin: 0.5em 0;
     align-self: center;
 
-    .github {
+    .link {
       vertical-align: middle;
-      margin-left: 10px;
+      margin-left: 15px;
 
       a {
         color: ${FONT_COLOR};

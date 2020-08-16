@@ -48,7 +48,10 @@ class Achievement extends React.Component<AchievementProps> {
                 (achievement: AchievementModel) => (
                   <div key={achievement.id} className="achievement">
                     <div className="image">
-                      <img src={achievement.imageUrl} alt={achievement.time} />
+                      <img
+                        src={achievement.imageUrl}
+                        alt={achievement.organizer}
+                      />
                     </div>
                     <div className="detail">
                       <div className="title-and-time">

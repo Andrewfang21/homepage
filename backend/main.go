@@ -6,6 +6,7 @@ import (
 	"homepage/models"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -22,17 +23,16 @@ func main() {
 	}
 	defer db.CloseConnection()
 
+	allowedOrigins := strings.Split(os.Getenv("ALLOWED_ORIGINS"), ",")
+	allowedMethods := strings.Split(os.Getenv("ALLOWED_METHODS"), ",")
+
 	r := gin.New()
 	r.Use(
 		gin.Logger(),
 		gin.Recovery(),
 		cors.New(cors.Config{
-			AllowMethods: []string{"GET", "OPTIONS"},
-			AllowOrigins: []string{
-				"http://localhost:3000",
-				"http://andrewfanggara.herokuapp.com",
-				"https://andrewfanggara.herokuapp.com",
-			},
+			AllowMethods:     allowedMethods,
+			AllowOrigins:     allowedOrigins,
 			AllowCredentials: true,
 		}),
 	)

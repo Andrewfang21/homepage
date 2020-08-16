@@ -11,6 +11,7 @@ type Project struct {
 	Link         string   `json:"link"`
 	TechStacks   string   `json:"techStack"`
 	ImageURLs    []string `json:"imageUrls"`
+	DemoURL      *string  `json:"demoUrl"`
 	Descriptions []string `json:"descriptions"`
 }
 
@@ -33,7 +34,7 @@ func NewProjectOrmer(db *sql.DB) ProjectOrmer {
 func (o *projectOrmer) GetAll() ([]*Project, error) {
 	queryString := `
 		SELECT
-			id, title, link, tech_stacks
+			id, title, link, demo_url, tech_stacks
 		FROM projects
 		ORDER BY id DESC
 	`
@@ -50,6 +51,7 @@ func (o *projectOrmer) GetAll() ([]*Project, error) {
 			&project.ID,
 			&project.Title,
 			&project.Link,
+			&project.DemoURL,
 			&project.TechStacks,
 		)
 		if err != nil {

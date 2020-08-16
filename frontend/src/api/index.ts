@@ -21,8 +21,6 @@ export async function getExperiences(): Promise<ExperienceModel> {
 
 export async function getProjects(): Promise<ProjectModel[]> {
   const response = await http.get("/projects");
-  console.log("These are the projects");
-  console.log(response.data);
   return response.data;
 }
 
