@@ -99,7 +99,7 @@ const Detail = styled.div`
   .title {
     padding: 50px 0px 20px 0px;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 2em;
 
     @media screen and (max-width: 900px) {
       text-align: center;

@@ -106,7 +106,7 @@ const Container = styled.div`
 
   .header {
     margin: 30px 0;
-    font-size: 40px;
+    font-size: 2em;
     font-weight: bold;
   }
 

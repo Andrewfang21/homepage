@@ -8,6 +8,7 @@ import Achievement from "./Achievement";
 import Skill from "./Skill";
 import NavigationBar from "../components/Navbar";
 import MobileNavbar from "../components/MobileNavbar";
+import Footer from "../components/Footer";
 
 class Routes extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class Routes extends React.Component {
         <Project />
         <Achievement />
         <Skill />
+        <Footer />
       </Container>
     );
   }

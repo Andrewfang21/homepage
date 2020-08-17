@@ -85,7 +85,7 @@ class Experience extends React.Component<ExperienceProps> {
                 ))}
               </div>
             )}
-            <div className="header">Work and Voluntary Experiences</div>
+            <div className="header">Work & Voluntary Experiences</div>
             {loading && (
               <div className="loading">
                 <LoadingIndicator />
@@ -169,7 +169,7 @@ const Flex = styled.div`
   .header {
     margin-top: 30px;
     margin-bottom: 30px;
-    font-size: 40px;
+    font-size: 2em;
     font-weight: bold;
   }
 `;
@@ -234,7 +234,10 @@ const Timeline = styled.ul`
   .panel {
     flex: 1;
     ul {
-      padding-left: 10px;
+      padding-left: 30px;
+      @media screen and (max-width: 900px) {
+        padding-left: 10px;
+      }
     }
   }
 

@@ -115,7 +115,7 @@ const Container = styled.div`
   .header {
     margin: 3vh 0;
     width: 85%;
-    font-size: 40px;
+    font-size: 2em;
     font-weight: bold;
   }
 
@@ -132,7 +132,7 @@ const Detail = styled.div`
 
   .title {
     font-weight: bold;
-    font-size: 30px;
+    font-size: 1.5em;
     margin: 0.5em 0;
     align-self: center;
 

@@ -90,7 +90,7 @@ const Container = styled.div`
   .header {
     margin: 30px 0;
     width: 85%;
-    font-size: 40px;
+    font-size: 2em;
     font-weight: bold;
   }
 
