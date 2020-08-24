@@ -1,19 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-scroll";
 import styled from "styled-components";
 
 import { links, PageDetails } from "../constants/scrollLinks";
-import { SECONDARY_COLOR } from "../constants/style";
+import { StoreState } from "../redux/reducers";
+import { Theme } from "../redux/reducers/Theme";
 
-interface NavbarProps {}
+interface Props {
+  theme: Theme;
+}
 
-interface NavbarState {
+interface State {
   show: boolean;
   scrollPos: number;
 }
 
-class NavigationBar extends React.Component<NavbarProps, NavbarState> {
-  constructor(props: NavbarProps) {
+class NavigationBar extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       show: true,
@@ -39,10 +43,11 @@ class NavigationBar extends React.Component<NavbarProps, NavbarState> {
   }
 
   render() {
+    const { secondaryColor } = this.props.theme;
     return (
       <Transition>
         <StyledNavbar className={this.state.show ? "active" : "hidden"}>
-          <Links>
+          <Links secondarycolor={secondaryColor}>
             {Object.values(links).map((link: PageDetails) => (
               <Link
                 className="link"
@@ -62,13 +67,13 @@ class NavigationBar extends React.Component<NavbarProps, NavbarState> {
   }
 }
 
-export default NavigationBar;
+const mapStateToProps = ({ theme }: StoreState): { theme: Theme } => {
+  return { theme };
+};
+
+export default connect(mapStateToProps, {})(NavigationBar);
 
 const Transition = styled.div`
-  @media screen and (max-width: 900px) {
-    display: none;
-  }
-
   .active {
     visibility: visible;
     transition: all 500ms ease-out;
@@ -77,6 +82,9 @@ const Transition = styled.div`
     visibility: hidden;
     transition: all 500ms ease-in;
     transform: translate(0, -100%);
+  }
+  @media screen and (max-width: 900px) {
+    display: none;
   }
 `;
 
@@ -96,21 +104,35 @@ const StyledNavbar = styled.div`
   z-index: 1000;
 `;
 
-const Links = styled.div`
+const Links = styled.div<{ secondarycolor: string }>`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   color: white;
-
   .link {
     margin: 0 10px;
     transform: translateX(-30px);
     -webkit-transform: translateX(-30px);
   }
-
+  .link:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 30%;
+    position: absolute;
+    background: ${(props) => props.secondarycolor};
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
   .link:hover {
     cursor: pointer;
-    color: ${SECONDARY_COLOR};
+  }
+  .link:hover:after {
+    cursor: pointer;
+    width: 100%;
+    left: 0;
   }
 `;

@@ -1,32 +1,25 @@
 import { Dispatch } from "redux";
 
-import SkillModel from "../../models/Skill";
-
-import { SkillActionTypes } from "../actions/types";
+import Skill from "../../models/Skill";
 import * as api from "../../api";
 
-// Models ------------------------------------------------------------
-export interface LoadingSkills {
-  type: SkillActionTypes.LOADING_SKILLS;
+export enum SkillActions {
+  SKILL_LOAD = "SKILL_LOAD",
+  SKILL_SET = "SKILL_SET",
 }
 
-export interface SetSkills {
-  type: SkillActionTypes.SET_SKILLS;
-  payload: SkillModel[];
+export type SkillActionTypes = SkillLoad | SkillSet;
+
+interface SkillLoad {
+  type: SkillActions.SKILL_LOAD;
 }
-
-// Actions ------------------------------------------------------------
-export const loadingSkills = (): LoadingSkills => ({
-  type: SkillActionTypes.LOADING_SKILLS,
-});
-
-export const setSkills = (payload: SkillModel[]): SetSkills => ({
-  type: SkillActionTypes.SET_SKILLS,
-  payload: payload,
-});
+interface SkillSet {
+  type: SkillActions.SKILL_SET;
+  payload: Skill[];
+}
 
 export const fetchSkills = () => async (dispatch: Dispatch) => {
-  dispatch<LoadingSkills>(loadingSkills());
-  const skills: SkillModel[] = await api.getSkills();
-  dispatch<SetSkills>(setSkills(skills));
+  dispatch<SkillLoad>({ type: SkillActions.SKILL_LOAD });
+  const skills: Skill[] = await api.getSkills();
+  dispatch<SkillSet>({ type: SkillActions.SKILL_SET, payload: skills });
 };

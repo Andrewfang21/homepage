@@ -1,32 +1,27 @@
 import { Dispatch } from "redux";
-
-import ExperienceModel from "../../models/Experience";
-
-import { ExperienceActionTypes } from "../actions/types";
+import Experience from "../../models/Experience";
 import * as api from "../../api";
 
-// Models ------------------------------------------------------------
-export interface LoadingExperiences {
-  type: ExperienceActionTypes.LOADING_EXPERIENCES;
+export enum ExperienceActions {
+  EXPERIENCE_LOAD = "EXPERIENCE_LOAD",
+  EXPERIENCE_SET = "EXPERIENCE_SET",
 }
 
-export interface SetExperiences {
-  type: ExperienceActionTypes.SET_EXPERIENCES;
-  payload: ExperienceModel;
+export type ExperienceActionTypes = ExperienceLoad | ExperienceSet;
+
+interface ExperienceLoad {
+  type: ExperienceActions.EXPERIENCE_LOAD;
 }
-
-// Actions ------------------------------------------------------------
-export const loadingExperiences = (): LoadingExperiences => ({
-  type: ExperienceActionTypes.LOADING_EXPERIENCES,
-});
-
-export const setExperiences = (payload: ExperienceModel): SetExperiences => ({
-  type: ExperienceActionTypes.SET_EXPERIENCES,
-  payload: payload,
-});
+interface ExperienceSet {
+  type: ExperienceActions.EXPERIENCE_SET;
+  payload: Experience;
+}
 
 export const fetchExperiences = () => async (dispatch: Dispatch) => {
-  dispatch<LoadingExperiences>(loadingExperiences());
-  const experiences: ExperienceModel = await api.getExperiences();
-  dispatch<SetExperiences>(setExperiences(experiences));
+  dispatch<ExperienceLoad>({ type: ExperienceActions.EXPERIENCE_LOAD });
+  const experiences: Experience = await api.getExperiences();
+  dispatch<ExperienceSet>({
+    type: ExperienceActions.EXPERIENCE_SET,
+    payload: experiences,
+  });
 };

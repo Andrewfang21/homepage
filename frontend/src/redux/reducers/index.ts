@@ -1,16 +1,18 @@
 import { combineReducers } from "redux";
-import { experienceReducer, ExperienceActionModel } from "./Experience";
-import { ProjectActionModel, projectReducer } from "./Project";
-import { AchievementActionModel, achievementReducer } from "./Achievement";
-import { SkillActionModel, skillReducer } from "./Skill";
-import { ProfileActionModel, profileReducer } from "./Profile";
+import { experienceReducer, ExperienceState } from "./Experience";
+import { ProjectState, projectReducer } from "./Project";
+import { AchievementState, achievementReducer } from "./Achievement";
+import { ProfileState, profileReducer } from "./Profile";
+import { SkillState, skillReducer } from "./Skill";
+import { Theme, themeReducer } from "./Theme";
 
 export interface StoreState {
-  profile: ProfileActionModel;
-  experiences: ExperienceActionModel;
-  projects: ProjectActionModel;
-  achievements: AchievementActionModel;
-  skills: SkillActionModel;
+  profile: ProfileState;
+  experiences: ExperienceState;
+  projects: ProjectState;
+  achievements: AchievementState;
+  skills: SkillState;
+  theme: Theme;
 }
 
 export const reducers = combineReducers<StoreState>({
@@ -19,4 +21,5 @@ export const reducers = combineReducers<StoreState>({
   projects: projectReducer,
   achievements: achievementReducer,
   skills: skillReducer,
+  theme: themeReducer,
 });

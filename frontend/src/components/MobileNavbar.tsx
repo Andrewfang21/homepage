@@ -1,21 +1,21 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-scroll";
 import styled from "styled-components";
 
 import { links, PageDetails } from "../constants/scrollLinks";
-import { FONT_COLOR } from "../constants/style";
+import { StoreState } from "../redux/reducers";
+import { Theme } from "../redux/reducers/Theme";
 
-interface MobileNavbarState {
+interface Props {
+  theme: Theme;
+}
+interface State {
   open: boolean;
 }
 
-interface MobileNavbarProps {}
-
-class MobileNavbar extends React.Component<
-  MobileNavbarProps,
-  MobileNavbarState
-> {
-  constructor(props: MobileNavbarProps) {
+class MobileNavbar extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { open: false };
   }
@@ -25,17 +25,18 @@ class MobileNavbar extends React.Component<
   }
 
   render() {
+    const { fontColor } = this.props.theme;
+    const { open } = this.state;
     return (
       <Container>
         <StyledNavbar
-          open={this.state.open}
+          open={open}
           onClick={() => this.toggleHamburger()}
+          fontcolor={fontColor}
         >
-          <div />
-          <div />
-          <div />
+          <Hamburger />
         </StyledNavbar>
-        <Links open={this.state.open}>
+        <Links open={this.state.open} fontcolor={fontColor}>
           {Object.values(links).map((link: PageDetails) => (
             <Link
               className="link"
@@ -55,7 +56,23 @@ class MobileNavbar extends React.Component<
   }
 }
 
-export default MobileNavbar;
+class Hamburger extends React.Component {
+  render() {
+    return (
+      <React.Fragment>
+        <div />
+        <div />
+        <div />
+      </React.Fragment>
+    );
+  }
+}
+
+const mapStateToProps = ({ theme }: StoreState): { theme: Theme } => {
+  return { theme };
+};
+
+export default connect(mapStateToProps, {})(MobileNavbar);
 
 const Container = styled.div`
   height: 70px;
@@ -63,13 +80,12 @@ const Container = styled.div`
   background-color: rgb(55, 56, 59, 0.5);
   position: fixed;
   z-index: 1000;
-
   @media screen and (min-width: 901px) {
     display: none;
   }
 `;
 
-const StyledNavbar: any = styled.div`
+const StyledNavbar = styled.div<{ open: boolean; fontcolor: string }>`
   width: 2rem;
   height: 2rem;
   position: fixed;
@@ -77,60 +93,51 @@ const StyledNavbar: any = styled.div`
   right: 20px;
   z-index: 20;
   display: none;
-
+  div {
+    width: 2rem;
+    height: 0.25rem;
+    background-color: ${(props) => props.fontcolor};
+    border-radius: 10px;
+    transform-origin: 1px;
+    transition: all 0.3s linear;
+    &:nth-child(1) {
+      transform: ${(props) => (props.open ? "rotate(45deg)" : "rotate(0)")};
+    }
+    &:nth-child(2) {
+      transform: ${(props) =>
+        props.open ? "translateX(100%)" : "translateX(0)"};
+      opacity: ${(props) => (props.open ? 0 : 1)};
+    }
+    &:nth-child(3) {
+      transform: ${(props) => (props.open ? "rotate(-45deg)" : "rotate(0)")};
+    }
+  }
   @media (max-width: 900px) {
     display: flex;
     justify-content: space-around;
     flex-flow: column nowrap;
   }
-
-  div {
-    width: 2rem;
-    height: 0.25rem;
-    background-color: ${FONT_COLOR};
-    border-radius: 10px;
-    transform-origin: 1px;
-    transition: all 0.3s linear;
-
-    &:nth-child(1) {
-      transform: ${({ open }: { open: boolean }) =>
-        open ? "rotate(45deg)" : "rotate(0)"};
-    }
-
-    &:nth-child(2) {
-      transform: ${({ open }: { open: boolean }) =>
-        open ? "translateX(100%)" : "translateX(0)"};
-      opacity: ${({ open }: { open: boolean }) => (open ? 0 : 1)};
-    }
-
-    &:nth-child(3) {
-      transform: ${({ open }: { open: boolean }) =>
-        open ? "rotate(-45deg)" : "rotate(0)"};
-    }
-  }
 `;
 
-const Links: any = styled.ul`
+const Links = styled.ul<{ open: boolean; fontcolor: string }>`
   list-style: none;
   display: flex;
   flex-flow: row nowrap;
   margin-block-start: 0;
-
   @media (max-width: 900px) {
     flex-flow: column nowrap;
     background-color: #0d2538;
     position: fixed;
-    transform: ${({ open }: { open: boolean }) =>
-      open ? "translateX(0)" : "translateX(100%)"};
+    transform: ${(props) =>
+      props.open ? "translateX(0)" : "translateX(100%)"};
     top: 0;
     right: 0;
     height: 100vh;
     width: 200px;
     padding-top: 4.5rem;
     transition: transform 0.3s ease-in-out;
-
     .link {
-      color: ${FONT_COLOR};
+      color: ${(props) => props.fontcolor};
       padding: 18px 30px;
       text-align: right;
       font-weight: bold;

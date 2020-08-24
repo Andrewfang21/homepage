@@ -1,9 +1,9 @@
-interface ExperienceModel {
-  educations: EducationModel[];
-  works: WorkModel[];
+interface Experience {
+  educations: Education[];
+  works: Work[];
 }
 
-export interface EducationModel {
+export interface Education {
   id: number;
   institution: string;
   institutionUrl: string;
@@ -15,7 +15,7 @@ export interface EducationModel {
   descriptions: string[];
 }
 
-export interface WorkModel {
+export interface Work {
   id: number;
   company: string;
   companyUrl: string;
@@ -26,4 +26,4 @@ export interface WorkModel {
   descriptions: string[];
 }
 
-export default ExperienceModel;
+export default Experience;

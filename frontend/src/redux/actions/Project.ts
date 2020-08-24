@@ -1,31 +1,24 @@
 import { Dispatch } from "redux";
-
-import { ProjectActionTypes } from "../actions/types";
-import ProjectModel from "../../models/Project";
+import Project from "../../models/Project";
 import * as api from "../../api";
 
-// Models ------------------------------------------------------------
-export interface LoadingProjects {
-  type: ProjectActionTypes.LOADING_PROJECTS;
+export enum ProjectActions {
+  PROJECT_LOAD = "PROJECT_LOAD",
+  PROJECT_SET = "PROJECT_SET",
 }
 
-export interface SetProjects {
-  type: ProjectActionTypes.SET_PROJECTS;
-  payload: ProjectModel[];
+export type ProjectActionTypes = ProjectLoad | ProjectSet;
+
+interface ProjectLoad {
+  type: ProjectActions.PROJECT_LOAD;
 }
-
-// Actions ------------------------------------------------------------
-export const loadingProjects = (): LoadingProjects => ({
-  type: ProjectActionTypes.LOADING_PROJECTS,
-});
-
-export const setProjects = (payload: ProjectModel[]): SetProjects => ({
-  type: ProjectActionTypes.SET_PROJECTS,
-  payload: payload,
-});
+interface ProjectSet {
+  type: ProjectActions.PROJECT_SET;
+  payload: Project[];
+}
 
 export const fetchProjects = () => async (dispatch: Dispatch) => {
-  dispatch<LoadingProjects>(loadingProjects());
-  const projects: ProjectModel[] = await api.getProjects();
-  dispatch<SetProjects>(setProjects(projects));
+  dispatch<ProjectLoad>({ type: ProjectActions.PROJECT_LOAD });
+  const projects: Project[] = await api.getProjects();
+  dispatch<ProjectSet>({ type: ProjectActions.PROJECT_SET, payload: projects });
 };

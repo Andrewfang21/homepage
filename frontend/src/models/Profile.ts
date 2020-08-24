@@ -1,4 +1,4 @@
-interface ProfileModel {
+interface Profile {
   name: string;
   message: string;
   imageUrl: string;
@@ -6,4 +6,4 @@ interface ProfileModel {
   descriptions: string[];
 }
 
-export default ProfileModel;
+export default Profile;

@@ -1,4 +1,4 @@
-interface ProjectModel {
+interface Project {
   id: number;
   title: string;
   link: string;
@@ -8,4 +8,4 @@ interface ProjectModel {
   descriptions: string[];
 }
 
-export default ProjectModel;
+export default Project;

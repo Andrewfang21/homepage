@@ -1,33 +1,33 @@
-import ProjectModel from "../../models/Project";
-import { ProjectAction, ProjectActionTypes } from "../actions/types";
+import Project from "../../models/Project";
+import { ProjectActionTypes, ProjectActions } from "../actions/Project";
 
-export interface ProjectActionModel {
-  projects: ProjectModel[];
-  loading: boolean;
-  loaded: boolean;
+export interface ProjectState {
+  projects: Project[];
+  isLoading: boolean;
+  isLoaded: boolean;
 }
 
-const INITIAL_STATE: ProjectActionModel = {
+const INITIAL_STATE: ProjectState = {
   projects: [],
-  loading: false,
-  loaded: false,
+  isLoading: false,
+  isLoaded: false,
 };
 
 export const projectReducer = (
-  state: ProjectActionModel = INITIAL_STATE,
-  action: ProjectAction
-): ProjectActionModel => {
+  state: ProjectState = INITIAL_STATE,
+  action: ProjectActionTypes
+): ProjectState => {
   switch (action.type) {
-    case ProjectActionTypes.SET_PROJECTS:
+    case ProjectActions.PROJECT_SET:
       return {
         ...state,
         projects: action.payload,
-        loading: false,
-        loaded: true,
+        isLoading: false,
+        isLoaded: true,
       };
-    case ProjectActionTypes.LOADING_PROJECTS:
-      return { ...state, loading: true };
+    case ProjectActions.PROJECT_LOAD:
+      return { ...state, isLoading: true };
     default:
-      return state;
+      return { ...state };
   }
 };

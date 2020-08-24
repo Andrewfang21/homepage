@@ -1,34 +1,27 @@
 import { Dispatch } from "redux";
-
-import AchievementModel from "../../models/Achievement";
-
-import { AchievementActionTypes } from "../actions/types";
+import Achievement from "../../models/Achievement";
 import * as api from "../../api";
 
-// Models ------------------------------------------------------------
-export interface LoadingAchievements {
-  type: AchievementActionTypes.LOADING_ACHIEVEMENTS;
+export enum AchievementActions {
+  ACHIEVEMENT_SET = "ACHIEVEMENT_SET",
+  ACHIEVEMENT_LOAD = "ACHIEVEMENT_LOAD",
 }
 
-export interface SetAchievements {
-  type: AchievementActionTypes.SET_ACHIEVEMENTS;
-  payload: AchievementModel[];
+export type AchievementActionTypes = AchievementLoad | AchievementSet;
+
+interface AchievementLoad {
+  type: AchievementActions.ACHIEVEMENT_LOAD;
 }
-
-// Actions ------------------------------------------------------------
-export const loadingAchievements = (): LoadingAchievements => ({
-  type: AchievementActionTypes.LOADING_ACHIEVEMENTS,
-});
-
-export const setAchievements = (
-  payload: AchievementModel[]
-): SetAchievements => ({
-  type: AchievementActionTypes.SET_ACHIEVEMENTS,
-  payload: payload,
-});
+interface AchievementSet {
+  type: AchievementActions.ACHIEVEMENT_SET;
+  payload: Achievement[];
+}
 
 export const fetchAchievements = () => async (dispatch: Dispatch) => {
-  dispatch<LoadingAchievements>(loadingAchievements());
-  const achievements: AchievementModel[] = await api.getAchievements();
-  dispatch<SetAchievements>(setAchievements(achievements));
+  dispatch<AchievementLoad>({ type: AchievementActions.ACHIEVEMENT_LOAD });
+  const achievements: Achievement[] = await api.getAchievements();
+  dispatch<AchievementSet>({
+    type: AchievementActions.ACHIEVEMENT_SET,
+    payload: achievements,
+  });
 };

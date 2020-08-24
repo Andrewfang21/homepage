@@ -4,41 +4,42 @@ import { Element } from "react-scroll";
 import styled from "styled-components";
 
 import LoadingIndicator from "../components/LoadingIndicator";
-import ProfileModel from "../models/Profile";
-
 import { PROFILE_ROUTE } from "../constants/routes";
-import { PRIMARY_COLOR, FONT_COLOR } from "../constants/style";
 import { getProfile } from "../redux/actions/Profile";
 import { StoreState } from "../redux/reducers";
-import { ProfileActionModel } from "../redux/reducers/Profile";
+import { ProfileState } from "../redux/reducers/Profile";
+import { Theme } from "../redux/reducers/Theme";
 
-interface ProfileProps {
-  profile: ProfileActionModel;
+interface Props {
+  profile: ProfileState;
+  theme: Theme;
   getProfile: Function;
 }
 
-class Profile extends React.Component<ProfileProps> {
+class ProfileContainer extends React.Component<Props> {
   componentDidMount(): void {
-    if (this.props.profile.loaded) {
+    if (this.props.profile.isLoaded) {
       this.props.getProfile();
     }
   }
 
   render() {
-    const {
-      profile,
-      loading,
-    }: { profile: ProfileModel; loading: boolean } = this.props.profile;
+    const { profile, isLoading } = this.props.profile;
+    const { primaryColor, fontColor } = this.props.theme;
 
     return (
-      <StyledElement name={PROFILE_ROUTE}>
+      <StyledElement
+        name={PROFILE_ROUTE}
+        primarycolor={primaryColor}
+        fontcolor={fontColor}
+      >
         <Container>
-          {loading && (
+          {isLoading && (
             <div className="loading">
               <LoadingIndicator />
             </div>
           )}
-          {!loading && (
+          {!isLoading && (
             <Flex>
               <Image>
                 <img
@@ -47,7 +48,7 @@ class Profile extends React.Component<ProfileProps> {
                   alt={profile.name}
                 />
               </Image>
-              <Detail>
+              <Detail fontcolor={fontColor}>
                 <div className="title">About Me</div>
                 {Object.values(profile.descriptions).map(
                   (description: string) => (
@@ -67,52 +68,51 @@ class Profile extends React.Component<ProfileProps> {
 
 const mapStateToProps = ({
   profile,
-}: StoreState): { profile: ProfileActionModel } => {
-  return { profile };
+  theme,
+}: StoreState): { profile: ProfileState; theme: Theme } => {
+  return { profile, theme };
 };
 
-export default connect(mapStateToProps, { getProfile })(Profile);
+export default connect(mapStateToProps, { getProfile })(ProfileContainer);
 
-const StyledElement = styled(Element)`
+const StyledElement = styled(Element)<{
+  primarycolor: string;
+  fontcolor: string;
+}>`
   width: 100%;
   align-items: center;
   display: flex;
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${PRIMARY_COLOR};
-  color: ${FONT_COLOR};
+  background-color: ${(props) => props.primarycolor};
+  color: ${(props) => props.fontcolor};
 `;
 
 const Container = styled.div`
   width: 85%;
-
   .loading {
     margin-top: 10vh;
     margin-left: 42vw;
   }
 `;
 
-const Detail = styled.div`
+const Detail = styled.div<{ fontcolor: string }>`
   width: 100%;
-
   .title {
     padding: 50px 0px 20px 0px;
     font-weight: bold;
     font-size: 2em;
-
     @media screen and (max-width: 900px) {
       text-align: center;
       padding-top: 0px;
     }
   }
-
   .description {
     padding-left: 20px;
     margin-bottom: 30px;
     text-align: justify;
-    color: ${FONT_COLOR};
-
+    color: ${(props) => props.fontcolor};
     @media screen and (max-width: 900px) {
       padding-left: 0px;
     }
@@ -127,7 +127,6 @@ const Image = styled.div`
     width: 150px;
     height: 150px;
     border-radius: 50%;
-
     @media screen and (max-width: 900px) {
       margin-left: auto;
       margin-right: auto;
@@ -140,7 +139,6 @@ const Image = styled.div`
 const Flex = styled.div`
   display: flex;
   flex-direction: row;
-
   @media screen and (max-width: 900px) {
     flex-direction: column;
   }

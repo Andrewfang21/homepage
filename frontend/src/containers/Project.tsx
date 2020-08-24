@@ -4,45 +4,51 @@ import { Element } from "react-scroll";
 import styled from "styled-components";
 
 import LoadingIndicator from "../components/LoadingIndicator";
-
 import { PROJECT_ROUTE } from "../constants/routes";
-import { PRIMARY_COLOR, SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
-import ProjectModel from "../models/Project";
+import Project from "../models/Project";
 import { fetchProjects } from "../redux/actions/Project";
 import { StoreState } from "../redux/reducers";
-import { ProjectActionModel } from "../redux/reducers/Project";
+import { ProjectState } from "../redux/reducers/Project";
+import { Theme } from "../redux/reducers/Theme";
 
-interface ProjectProps {
-  projects: ProjectActionModel;
+interface Props {
+  projects: ProjectState;
+  theme: Theme;
   fetchProjects: Function;
 }
 
-class Project extends React.Component<ProjectProps> {
+class ProjectContainer extends React.Component<Props> {
   componentDidMount(): void {
-    if (!this.props.projects.loaded) {
+    if (!this.props.projects.isLoaded) {
       this.props.fetchProjects();
     }
   }
 
   render() {
-    const {
-      projects,
-      loading,
-    }: { projects: ProjectModel[]; loading: boolean } = this.props.projects;
+    const { projects, isLoading } = this.props.projects;
+    const { primaryColor, secondaryColor, fontColor } = this.props.theme;
 
     return (
-      <StyledElement name={PROJECT_ROUTE}>
+      <StyledElement
+        name={PROJECT_ROUTE}
+        primarycolor={primaryColor}
+        fontcolor={fontColor}
+      >
         <Container>
           <div className="header">Projects</div>
-          {loading && (
+          {isLoading && (
             <div className="loading">
               <LoadingIndicator />
             </div>
           )}
-          {!loading && (
+          {!isLoading && (
             <div>
-              {Object.values(projects).map((project: ProjectModel) => (
-                <Detail key={project.id}>
+              {Object.values(projects).map((project: Project) => (
+                <Detail
+                  key={project.id}
+                  secondarycolor={secondaryColor}
+                  fontcolor={fontColor}
+                >
                   <div className="title">
                     {project.title}
                     <span className="link">
@@ -94,93 +100,83 @@ class Project extends React.Component<ProjectProps> {
 
 const mapStateToProps = ({
   projects,
-}: StoreState): { projects: ProjectActionModel } => {
-  return { projects };
+  theme,
+}: StoreState): { projects: ProjectState; theme: Theme } => {
+  return { projects, theme };
 };
 
-export default connect(mapStateToProps, { fetchProjects })(Project);
+export default connect(mapStateToProps, { fetchProjects })(ProjectContainer);
 
-const StyledElement = styled(Element)`
+const StyledElement = styled(Element)<{
+  primarycolor: string;
+  fontcolor: string;
+}>`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${PRIMARY_COLOR};
-  color: ${FONT_COLOR};
+  background-color: ${(props) => props.primarycolor};
+  color: ${(props) => props.fontcolor};
 `;
 
 const Container = styled.div`
   width: 85%;
-
   .header {
     margin: 3vh 0;
     width: 85%;
     font-size: 2em;
     font-weight: bold;
   }
-
   .loading {
     margin-top: 10vh;
     margin-left: 42vw;
   }
 `;
 
-const Detail = styled.div`
+const Detail = styled.div<{ secondarycolor: string; fontcolor: string }>`
   display: flex;
   flex-direction: column;
   align-content: center;
-
   .title {
     font-weight: bold;
     font-size: 1.5em;
     margin: 0.5em 0;
     align-self: center;
-
     .link {
       vertical-align: middle;
       margin-left: 15px;
-
       a {
-        color: ${FONT_COLOR};
-
+        color: ${(props) => props.fontcolor};
         :hover {
-          color: ${SECONDARY_COLOR};
+          color: ${(props) => props.secondarycolor};
         }
       }
     }
   }
-
   .image {
     display: flex;
     justify-content: center;
-
     img {
       height: 200px;
       margin: 0 1em;
-
       @media screen and (max-width: 900px) {
         height: 100px;
       }
     }
   }
-
   .descriptions {
     display: flex;
     flex-direction: column;
     text-align: justify;
-
     .tech-stack {
       font-weight: bold;
       font-size: 1em;
     }
-
     @media screen and (max-width: 900px) {
       padding-left: 10px;
     }
-
     @media screen and (min-width: 900px) {
       align-items: center;
-
       li {
         width: 75%;
         margin: 3px;

@@ -4,16 +4,16 @@ import { Element } from "react-scroll";
 import styled from "styled-components";
 
 import LoadingIndicator from "../components/LoadingIndicator";
-import SkillModel from "../models/Skill";
-
+import Skill from "../models/Skill";
 import { SKILL_ROUTE } from "../constants/routes";
-import { PRIMARY_COLOR, FONT_COLOR, SECONDARY_COLOR } from "../constants/style";
 import { fetchSkills } from "../redux/actions/Skill";
 import { StoreState } from "../redux/reducers";
-import { SkillActionModel } from "../redux/reducers/Skill";
+import { SkillState } from "../redux/reducers/Skill";
+import { Theme } from "../redux/reducers/Theme";
 
-interface SkillProps {
-  skills: SkillActionModel;
+interface Props {
+  skills: SkillState;
+  theme: Theme;
   fetchSkills: Function;
 }
 
@@ -25,39 +25,41 @@ const skillCategories: string[] = [
   "Languages",
 ];
 
-class Skill extends React.Component<SkillProps> {
-  componentDidMount() {
-    if (!this.props.skills.loaded) {
+class SkillContainer extends React.Component<Props> {
+  componentDidMount(): void {
+    if (!this.props.skills.isLoaded) {
       this.props.fetchSkills();
     }
   }
 
   render() {
-    const {
-      skills,
-      loading,
-    }: { skills: SkillModel[]; loading: boolean } = this.props.skills;
+    const { skills, isLoading } = this.props.skills;
+    const { primaryColor, secondaryColor, fontColor } = this.props.theme;
 
     return (
-      <StyledElement name={SKILL_ROUTE}>
+      <StyledElement
+        name={SKILL_ROUTE}
+        primarycolor={primaryColor}
+        fontcolor={fontColor}
+      >
         <Container>
           <div className="header">Skills</div>
-          {loading && (
+          {isLoading && (
             <div className="loading">
               <LoadingIndicator />
             </div>
           )}
-          {!loading && (
-            <Skills>
+          {!isLoading && (
+            <Skills secondarycolor={secondaryColor}>
               {skillCategories.map((category: string) => (
-                <SkillSection>
+                <div className="skill-section" key={category}>
                   <div className="section-title">{category}</div>
-                  {Object.values(skills).map((skill: SkillModel) => (
-                    <div className="section-content">
+                  {Object.values(skills).map((skill: Skill) => (
+                    <div className="section-content" key={skill.id}>
                       {skill.label === category && skill.name}
                     </div>
                   ))}
-                </SkillSection>
+                </div>
               ))}
             </Skills>
           )}
@@ -69,63 +71,61 @@ class Skill extends React.Component<SkillProps> {
 
 const mapStateToProps = ({
   skills,
-}: StoreState): { skills: SkillActionModel } => {
-  return { skills };
+  theme,
+}: StoreState): { skills: SkillState; theme: Theme } => {
+  return { skills, theme };
 };
 
-export default connect(mapStateToProps, { fetchSkills })(Skill);
+export default connect(mapStateToProps, { fetchSkills })(SkillContainer);
 
-const StyledElement = styled(Element)`
+const StyledElement = styled(Element)<{
+  primarycolor: string;
+  fontcolor: string;
+}>`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${PRIMARY_COLOR};
-  color: ${FONT_COLOR};
+  background-color: ${(props) => props.primarycolor};
+  color: ${(props) => props.fontcolor};
 `;
 
 const Container = styled.div`
   width: 85%;
-
   .header {
     margin: 30px 0;
     width: 85%;
     font-size: 2em;
     font-weight: bold;
   }
-
   .loading {
     margin-top: 10vh;
     margin-left: 42vw;
   }
 `;
 
-const Skills = styled.div`
+const Skills = styled.div<{ secondarycolor: string }>`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   margin: 1em;
-
+  .skill-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: start;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    .section-title {
+      font-weight: bold;
+      font-size: 1.5em;
+      color: ${(props) => props.secondarycolor};
+    }
+    .section-content {
+      padding-left: 1em;
+    }
+  }
   @media screen and (max-width: 576px) {
     display: flex;
     flex-direction: column;
-  }
-`;
-
-const SkillSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  text-align: start;
-  align-items: flex-start;
-  margin-bottom: 2rem;
-
-  .section-title {
-    font-weight: bold;
-    font-size: 1.5em;
-    color: ${SECONDARY_COLOR};
-  }
-
-  .section-content {
-    padding-left: 1em;
   }
 `;

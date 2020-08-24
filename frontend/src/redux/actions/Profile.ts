@@ -1,40 +1,51 @@
 import { Dispatch } from "redux";
-
-import ProfileModel from "../../models/Profile";
-
-import { ProfileActionTypes } from "../actions/types";
+import Profile from "../../models/Profile";
 import * as api from "../../api";
 
-// Models ------------------------------------------------------------
-export interface LoadingProfile {
-  type: ProfileActionTypes.LOADING_PROFILE;
+export enum ProfileActions {
+  PROFILE_LOAD = "PROFILE_LOAD",
+  PROFILE_SET = "PROFILE_SET",
+  PROFILE_GET = "PROFILE_GET",
 }
 
-export interface SetProfile {
-  type: ProfileActionTypes.SET_PROFILE;
-  payload: ProfileModel;
+export type ProfileActionTypes = ProfileLoad | ProfileSet | ProfileGet;
+
+interface ProfileLoad {
+  type: ProfileActions.PROFILE_LOAD;
+}
+interface ProfileSet {
+  type: ProfileActions.PROFILE_SET;
+  payload: Profile;
+}
+interface ProfileGet {
+  type: ProfileActions.PROFILE_GET;
 }
 
-export interface GetProfile {
-  type: ProfileActionTypes.GET_PROFILE;
-}
+// export const fetchProfile = () => async (dispatch: Dispatch) => {
+//   dispatch<ProfileLoad>({ type: ProfileActions.PROFILE_LOAD });
+//   const profile: Profile = await api.getProfile();
+//   dispatch<ProfileSet>({ type: ProfileActions.PROFILE_SET, payload: profile });
+// };
 
-// Actions ------------------------------------------------------------
-export const loadingProfile = (): LoadingProfile => ({
-  type: ProfileActionTypes.LOADING_PROFILE,
+// export const getProfile = (): ProfileGet => ({
+//   type: ProfileActions.PROFILE_GET,
+// });
+
+export const loadingProfile = (): ProfileLoad => ({
+  type: ProfileActions.PROFILE_LOAD,
 });
 
-export const setProfile = (payload: ProfileModel): SetProfile => ({
-  type: ProfileActionTypes.SET_PROFILE,
+export const setProfile = (payload: Profile): ProfileSet => ({
+  type: ProfileActions.PROFILE_SET,
   payload: payload,
 });
 
-export const getProfile = (): GetProfile => ({
-  type: ProfileActionTypes.GET_PROFILE,
+export const getProfile = (): ProfileGet => ({
+  type: ProfileActions.PROFILE_GET,
 });
 
 export const fetchProfile = () => async (dispatch: Dispatch) => {
-  dispatch<LoadingProfile>(loadingProfile());
-  const profile: ProfileModel = await api.getProfile();
-  dispatch<SetProfile>(setProfile(profile));
+  dispatch<ProfileLoad>(loadingProfile());
+  const profile: Profile = await api.getProfile();
+  dispatch<ProfileSet>(setProfile(profile));
 };

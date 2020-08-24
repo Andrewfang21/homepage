@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
-import { SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
+import { StoreState } from "../redux/reducers";
+import { Theme } from "../redux/reducers/Theme";
 
 const GITHUB: string = "https://github.com/Andrewfang21/";
 const FACEBOOK: string = "https://www.facebook.com/Andrewfanggara21/";
@@ -8,12 +10,12 @@ const INSTAGRAM: string = "https://www.instagram.com/andrew_fanggara/";
 const LINKEDIN: string = "https://www.linkedin.com/in/andrewfang21/";
 const EMAIL: string = "mailto:Andrewfanggara21@gmail.com";
 
-interface SocialMediaModel {
+interface SocialMedia {
   link: string;
   icon: string;
 }
 
-const SocialMediaData: SocialMediaModel[] = [
+const SocialMediaData: SocialMedia[] = [
   { link: LINKEDIN, icon: "fa fa-linkedin fa-2x" },
   { link: GITHUB, icon: "fa fa-github fa-2x" },
   { link: FACEBOOK, icon: "fa fa-facebook fa-2x" },
@@ -21,35 +23,45 @@ const SocialMediaData: SocialMediaModel[] = [
   { link: EMAIL, icon: "fa fa-envelope fa-2x" },
 ];
 
-class SocialMedias extends React.Component {
+interface Props {
+  theme: Theme;
+}
+
+class SocialMedias extends React.Component<Props> {
   render() {
+    const { secondaryColor, fontColor } = this.props.theme;
     return (
-      <SocialMedia>
-        {Object.values(SocialMediaData).map((data: SocialMediaModel) => (
+      <SocialMediaList secondarycolor={secondaryColor} fontcolor={fontColor}>
+        {Object.values(SocialMediaData).map((data: SocialMedia) => (
           <span key={data.icon}>
             <a href={data.link} rel="noopener noreferrer" target="_blank">
               <i className={data.icon} />
             </a>
           </span>
         ))}
-      </SocialMedia>
+      </SocialMediaList>
     );
   }
 }
 
-export default SocialMedias;
+const mapStateToProps = ({ theme }: StoreState): { theme: Theme } => {
+  return { theme };
+};
 
-const SocialMedia = styled.div`
+export default connect(mapStateToProps, {})(SocialMedias);
+
+const SocialMediaList = styled.div<{
+  secondarycolor: string;
+  fontcolor: string;
+}>`
   display: flex;
   flex-wrap: wrap;
   align-content: center;
-
   a {
     margin: 5px;
-    color: ${FONT_COLOR};
-
+    color: ${(props) => props.fontcolor};
     :hover {
-      color: ${SECONDARY_COLOR};
+      color: ${(props) => props.secondarycolor};
     }
   }
 `;

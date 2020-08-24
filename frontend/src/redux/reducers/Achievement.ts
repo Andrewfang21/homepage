@@ -1,33 +1,36 @@
-import AchievementModel from "../../models/Achievement";
-import { AchievementAction, AchievementActionTypes } from "../actions/types";
+import Achievement from "../../models/Achievement";
+import {
+  AchievementActionTypes,
+  AchievementActions,
+} from "../actions/Achievement";
 
-export interface AchievementActionModel {
-  achievements: AchievementModel[];
-  loading: boolean;
-  loaded: boolean;
+export interface AchievementState {
+  achievements: Achievement[];
+  isLoading: boolean;
+  isLoaded: boolean;
 }
 
-const INITIAL_STATE: AchievementActionModel = {
+const INITIAL_STATE: AchievementState = {
   achievements: [],
-  loading: false,
-  loaded: false,
+  isLoading: false,
+  isLoaded: false,
 };
 
 export const achievementReducer = (
-  state: AchievementActionModel = INITIAL_STATE,
-  action: AchievementAction
-): AchievementActionModel => {
+  state: AchievementState = INITIAL_STATE,
+  action: AchievementActionTypes
+): AchievementState => {
   switch (action.type) {
-    case AchievementActionTypes.SET_ACHIEVEMENTS:
+    case AchievementActions.ACHIEVEMENT_SET:
       return {
         ...state,
         achievements: action.payload,
-        loading: false,
-        loaded: true,
+        isLoading: false,
+        isLoaded: true,
       };
-    case AchievementActionTypes.LOADING_ACHIEVEMENTS:
-      return { ...state, loading: true };
+    case AchievementActions.ACHIEVEMENT_LOAD:
+      return { ...state, isLoading: true };
     default:
-      return state;
+      return { ...state };
   }
 };

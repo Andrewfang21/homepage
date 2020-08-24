@@ -1,4 +1,4 @@
-interface AchievementModel {
+interface Achievement {
   id: number;
   title: string;
   organizer: string;
@@ -7,4 +7,4 @@ interface AchievementModel {
   descriptions: string[];
 }
 
-export default AchievementModel;
+export default Achievement;

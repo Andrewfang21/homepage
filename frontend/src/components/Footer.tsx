@@ -1,12 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 
-import { SECONDARY_COLOR, FONT_COLOR } from "../constants/style";
+import { StoreState } from "../redux/reducers";
+import { Theme } from "../redux/reducers/Theme";
 
-class Footer extends React.Component {
+interface Props {
+  theme: Theme;
+}
+
+class Footer extends React.Component<Props> {
   render() {
+    const { secondaryColor, fontColor } = this.props.theme;
+
     return (
-      <Container>
+      <Container secondarycolor={secondaryColor} fontcolor={fontColor}>
         <div>
           Copyright &copy; {new Date().getFullYear()} All rights reserved | This
           site is made with 💙 by Andrew Fanggara
@@ -16,19 +24,22 @@ class Footer extends React.Component {
   }
 }
 
-export default Footer;
+const mapStateToProps = ({ theme }: StoreState): { theme: Theme } => {
+  return { theme };
+};
 
-const Container = styled.div`
+export default connect(mapStateToProps, {})(Footer);
+
+const Container = styled.div<{ secondarycolor: string; fontcolor: string }>`
   width: 100%;
   min-height: 4em;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  color: #fff;
+  color: ${(props) => props.fontcolor};
   justify-content: center;
-  background-color: ${SECONDARY_COLOR};
-
+  background-color: ${(props) => props.secondarycolor};
   div {
     padding: 20px;
   }

@@ -1,33 +1,33 @@
-import SkillModel from "../../models/Skill";
-import { SkillActionTypes, SkillAction } from "../actions/types";
+import Skill from "../../models/Skill";
+import { SkillActions, SkillActionTypes } from "../actions/Skill";
 
-export interface SkillActionModel {
-  skills: SkillModel[];
-  loading: boolean;
-  loaded: boolean;
+export interface SkillState {
+  skills: Skill[];
+  isLoading: boolean;
+  isLoaded: boolean;
 }
 
-const INITIAL_STATE: SkillActionModel = {
+const INITIAL_STATE: SkillState = {
   skills: [],
-  loading: false,
-  loaded: false,
+  isLoading: false,
+  isLoaded: false,
 };
 
 export const skillReducer = (
-  state: SkillActionModel = INITIAL_STATE,
-  action: SkillAction
-) => {
+  state: SkillState = INITIAL_STATE,
+  action: SkillActionTypes
+): SkillState => {
   switch (action.type) {
-    case SkillActionTypes.SET_SKILLS:
+    case SkillActions.SKILL_SET:
       return {
         ...state,
         skills: action.payload,
-        loading: false,
-        loaded: true,
+        isLoading: false,
+        isLoaded: true,
       };
-    case SkillActionTypes.LOADING_SKILLS:
-      return { ...state, loading: true };
+    case SkillActions.SKILL_LOAD:
+      return { ...state, isLoading: true };
     default:
-      return state;
+      return { ...state };
   }
 };

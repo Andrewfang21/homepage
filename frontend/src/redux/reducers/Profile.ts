@@ -1,41 +1,35 @@
-import ProfileModel from "../../models/Profile";
-import { ProfileAction, ProfileActionTypes } from "../actions/types";
+import Profile from "../../models/Profile";
+import { ProfileActions, ProfileActionTypes } from "../actions/Profile";
 
-export interface ProfileActionModel {
-  profile: ProfileModel;
-  loading: boolean;
-  loaded: boolean;
+export interface ProfileState {
+  profile: Profile;
+  isLoading: boolean;
+  isLoaded: boolean;
 }
 
-const INITIAL_STATE: ProfileActionModel = {
-  profile: {
-    name: "",
-    message: "",
-    email: "",
-    imageUrl: "",
-    descriptions: [],
-  },
-  loading: false,
-  loaded: false,
+const INITIAL_STATE: ProfileState = {
+  profile: { name: "", descriptions: [], email: "", message: "", imageUrl: "" },
+  isLoading: false,
+  isLoaded: false,
 };
 
 export const profileReducer = (
-  state: ProfileActionModel = INITIAL_STATE,
-  action: ProfileAction
-): ProfileActionModel => {
+  state: ProfileState = INITIAL_STATE,
+  action: ProfileActionTypes
+): ProfileState => {
   switch (action.type) {
-    case ProfileActionTypes.SET_PROFILE:
+    case ProfileActions.PROFILE_SET:
       return {
         ...state,
         profile: action.payload,
-        loading: false,
-        loaded: true,
+        isLoading: false,
+        isLoaded: true,
       };
-    case ProfileActionTypes.LOADING_PROFILE:
-      return { ...state, loading: true };
-    case ProfileActionTypes.GET_PROFILE:
+    case ProfileActions.PROFILE_LOAD:
+      return { ...state, isLoading: true, isLoaded: false };
+    case ProfileActions.PROFILE_GET:
       return { ...state, profile: state.profile };
     default:
-      return state;
+      return { ...state };
   }
 };
