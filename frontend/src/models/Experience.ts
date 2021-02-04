@@ -12,7 +12,7 @@ export interface Education {
   imageUrl: string;
   time: string;
   role: string;
-  descriptions: string[];
+  descriptions: string;
 }
 
 export interface Work {
@@ -23,7 +23,7 @@ export interface Work {
   place: string;
   time: string;
   role: string;
-  descriptions: string[];
+  descriptions: string;
 }
 
 export default Experience;

@@ -9,10 +9,9 @@ type Project struct {
 	ID           int64    `json:"id"`
 	Title        string   `json:"title"`
 	Link         string   `json:"link"`
-	TechStacks   string   `json:"techStack"`
 	ImageURLs    []string `json:"imageUrls"`
-	DemoURL      *string  `json:"demoUrl"`
-	Descriptions []string `json:"descriptions"`
+	DemoURL      string   `json:"demoUrl"`
+	Descriptions string   `json:"descriptions"`
 }
 
 type projectOrmer struct {
@@ -23,7 +22,6 @@ type projectOrmer struct {
 type ProjectOrmer interface {
 	GetAll() ([]*Project, error)
 	GetImageUrls(projectID int64) ([]string, error)
-	GetDescriptions(projectID int64) ([]string, error)
 }
 
 // NewProjectOrmer returns an instance of projectOrmer
@@ -34,7 +32,7 @@ func NewProjectOrmer(db *sql.DB) ProjectOrmer {
 func (o *projectOrmer) GetAll() ([]*Project, error) {
 	queryString := `
 		SELECT
-			id, title, link, demo_url, tech_stacks
+			id, title, link, demo_url, descriptions
 		FROM projects
 		ORDER BY id DESC
 	`
@@ -52,7 +50,7 @@ func (o *projectOrmer) GetAll() ([]*Project, error) {
 			&project.Title,
 			&project.Link,
 			&project.DemoURL,
-			&project.TechStacks,
+			&project.Descriptions,
 		)
 		if err != nil {
 			return nil, err
@@ -62,11 +60,6 @@ func (o *projectOrmer) GetAll() ([]*Project, error) {
 		if err != nil {
 			return nil, err
 		}
-		project.Descriptions, err = o.GetDescriptions(project.ID)
-		if err != nil {
-			return nil, err
-		}
-
 		projects = append(projects, &project)
 	}
 
@@ -95,29 +88,4 @@ func (o *projectOrmer) GetImageUrls(projectID int64) ([]string, error) {
 	}
 
 	return urls, nil
-}
-
-func (o *projectOrmer) GetDescriptions(projectID int64) ([]string, error) {
-	queryString := `
-		SELECT content
-		FROM project_descriptions
-		WHERE project_id = $1
-		ORDER BY id ASC
-	`
-	queryResult, err := o.db.Query(queryString, projectID)
-	if err != nil {
-		return nil, err
-	}
-
-	var descriptions []string
-	for queryResult.Next() {
-		var description string
-		err := queryResult.Scan(&description)
-		if err != nil {
-			return nil, err
-		}
-		descriptions = append(descriptions, description)
-	}
-
-	return descriptions, nil
 }

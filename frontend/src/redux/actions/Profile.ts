@@ -21,16 +21,6 @@ interface ProfileGet {
   type: ProfileActions.PROFILE_GET;
 }
 
-// export const fetchProfile = () => async (dispatch: Dispatch) => {
-//   dispatch<ProfileLoad>({ type: ProfileActions.PROFILE_LOAD });
-//   const profile: Profile = await api.getProfile();
-//   dispatch<ProfileSet>({ type: ProfileActions.PROFILE_SET, payload: profile });
-// };
-
-// export const getProfile = (): ProfileGet => ({
-//   type: ProfileActions.PROFILE_GET,
-// });
-
 export const loadingProfile = (): ProfileLoad => ({
   type: ProfileActions.PROFILE_LOAD,
 });

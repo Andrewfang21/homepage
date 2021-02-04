@@ -129,6 +129,7 @@ const Links = styled.div<{ secondarycolor: string }>`
   }
   .link:hover {
     cursor: pointer;
+    color: ${(props) => props.secondarycolor};
   }
   .link:hover:after {
     cursor: pointer;

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactHtmlParser from "react-html-parser";
 import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
@@ -50,13 +51,9 @@ class ProfileContainer extends React.Component<Props> {
               </Image>
               <Detail fontcolor={fontColor}>
                 <div className="title">About Me</div>
-                {Object.values(profile.descriptions).map(
-                  (description: string) => (
-                    <div key={description} className="description">
-                      {description}
-                    </div>
-                  )
-                )}
+                <div className="content">
+                  {ReactHtmlParser(profile.descriptions)}
+                </div>
               </Detail>
             </Flex>
           )}
@@ -108,13 +105,19 @@ const Detail = styled.div<{ fontcolor: string }>`
       padding-top: 0px;
     }
   }
-  .description {
-    padding-left: 20px;
-    margin-bottom: 30px;
-    text-align: justify;
-    color: ${(props) => props.fontcolor};
-    @media screen and (max-width: 900px) {
-      padding-left: 0px;
+  .content {
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding-left: 15px;
+      margin-bottom: 20px;
+      text-align: justify;
+      color: ${(props) => props.fontcolor};
+      @media screen and (max-width: 900px) {
+        padding-left: 0px;
+      }
     }
   }
 `;

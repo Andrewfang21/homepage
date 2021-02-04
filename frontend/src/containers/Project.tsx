@@ -1,4 +1,5 @@
 import React from "react";
+import ReactHtmlParser from "react-html-parser";
 import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
@@ -78,16 +79,9 @@ class ProjectContainer extends React.Component<Props> {
                         <img key={image} src={image} alt={project.title} />
                       ))}
                   </div>
-                  <ul className="descriptions">
-                    {Object.values(project.descriptions).map(
-                      (description: string) => (
-                        <li key={description}>{description}</li>
-                      )
-                    )}
-                    <li className="tech-stack">
-                      <span>Tech Stacks: {project.techStack}</span>
-                    </li>
-                  </ul>
+                  <div className="descriptions">
+                    {ReactHtmlParser(project.descriptions)}
+                  </div>
                 </Detail>
               ))}
             </div>
@@ -164,11 +158,11 @@ const Detail = styled.div<{ secondarycolor: string; fontcolor: string }>`
       }
     }
   }
-  .descriptions {
+  .descriptions > ul {
     display: flex;
     flex-direction: column;
     text-align: justify;
-    .tech-stack {
+    .tag {
       font-weight: bold;
       font-size: 1em;
     }

@@ -9,6 +9,7 @@ const FACEBOOK: string = "https://www.facebook.com/Andrewfanggara21/";
 const INSTAGRAM: string = "https://www.instagram.com/andrew_fanggara/";
 const LINKEDIN: string = "https://www.linkedin.com/in/andrewfang21/";
 const EMAIL: string = "mailto:Andrewfanggara21@gmail.com";
+const TRANSCRIPT: string = "https://drive.google.com/file/d/1nuG5W3h6l9nHxXe1E1Q8DoWusj9mBuGP/view?usp=sharing";
 
 interface SocialMedia {
   link: string;
@@ -21,6 +22,7 @@ const SocialMediaData: SocialMedia[] = [
   { link: FACEBOOK, icon: "fa fa-facebook fa-2x" },
   { link: INSTAGRAM, icon: "fa fa-instagram fa-2x" },
   { link: EMAIL, icon: "fa fa-envelope fa-2x" },
+  { link: TRANSCRIPT, icon: "fa fa-file fa-2x" },
 ];
 
 interface Props {

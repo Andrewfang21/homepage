@@ -3,7 +3,7 @@ interface Profile {
   message: string;
   imageUrl: string;
   email: string;
-  descriptions: string[];
+  descriptions: string;
 }
 
 export default Profile;

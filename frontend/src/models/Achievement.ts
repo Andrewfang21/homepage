@@ -4,7 +4,7 @@ interface Achievement {
   organizer: string;
   time: string;
   imageUrl: string;
-  descriptions: string[];
+  descriptions: string;
 }
 
 export default Achievement;

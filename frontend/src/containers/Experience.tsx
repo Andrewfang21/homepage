@@ -1,4 +1,5 @@
 import React from "react";
+import ReactHtmlParser from "react-html-parser";
 import { connect } from "react-redux";
 import { Element } from "react-scroll";
 import styled from "styled-components";
@@ -68,15 +69,9 @@ class ExperienceContainer extends React.Component<Props> {
                         </a>
                       </div>
                       <div className="grade">{education.grade}</div>
-                      <ul>
-                        {Object.values(education.descriptions).map(
-                          (description: string) => (
-                            <li key={description} className="description">
-                              {description}
-                            </li>
-                          )
-                        )}
-                      </ul>
+                      <div className="description">
+                        {ReactHtmlParser(education.descriptions)}
+                      </div>
                     </div>
                   </Timeline>
                 ))}
@@ -110,15 +105,9 @@ class ExperienceContainer extends React.Component<Props> {
                           {work.company}
                         </a>
                       </div>
-                      <ul>
-                        {Object.values(work.descriptions).map(
-                          (description: string) => (
-                            <li key={description} className="description">
-                              {description}
-                            </li>
-                          )
-                        )}
-                      </ul>
+                      <div className="description">
+                        {ReactHtmlParser(work.descriptions)}
+                      </div>
                     </div>
                   </Timeline>
                 ))}
@@ -231,8 +220,13 @@ const Timeline = styled.ul<{ secondaryColor: string }>`
     }
   }
   .description {
-    margin-bottom: 5px;
-    text-align: justify;
+    li {
+      margin-bottom: 5px;
+      text-align: justify;
+    }
+    a {
+      color: ${(props) => props.secondaryColor};
+    }
   }
   .grade {
     font-size: 15px;

@@ -1,4 +1,5 @@
 import React from "react";
+import ReactHtmlParser from "react-html-parser";
 import { Element } from "react-scroll";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -58,15 +59,9 @@ class AchievementContainer extends React.Component<Props> {
                     </div>
                     <div className="organizer">{achievement.organizer}</div>
                     <div className="mobile-time">{achievement.time}</div>
-                    <ul className="descriptions">
-                      {Object.values(achievement.descriptions).map(
-                        (description: string) => (
-                          <li key={description} className="description">
-                            {description}
-                          </li>
-                        )
-                      )}
-                    </ul>
+                    <div className="descriptions">
+                      {ReactHtmlParser(achievement.descriptions)}
+                    </div>
                   </div>
                 </div>
               ))}
