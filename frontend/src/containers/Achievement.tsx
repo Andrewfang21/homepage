@@ -132,11 +132,8 @@ const Container = styled.div`
     }
     @media screen and (max-width: 900px) {
       flex-direction: column;
-      .descriptions {
+      .descriptions > ul {
         padding-left: 10px;
-      }
-      .description {
-        margin: 5px 0;
       }
       .mobile-time {
         display: flex;

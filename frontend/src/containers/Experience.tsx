@@ -69,7 +69,7 @@ class ExperienceContainer extends React.Component<Props> {
                         </a>
                       </div>
                       <div className="grade">{education.grade}</div>
-                      <div className="description">
+                      <div className="descriptions">
                         {ReactHtmlParser(education.descriptions)}
                       </div>
                     </div>
@@ -105,7 +105,7 @@ class ExperienceContainer extends React.Component<Props> {
                           {work.company}
                         </a>
                       </div>
-                      <div className="description">
+                      <div className="descriptions">
                         {ReactHtmlParser(work.descriptions)}
                       </div>
                     </div>
@@ -219,10 +219,13 @@ const Timeline = styled.ul<{ secondaryColor: string }>`
       }
     }
   }
-  .description {
+  .descriptions {
     li {
       margin-bottom: 5px;
       text-align: justify;
+      @media screen and (max-width: 900px) {
+        margin-left: 10px;
+      }
     }
     a {
       color: ${(props) => props.secondaryColor};
