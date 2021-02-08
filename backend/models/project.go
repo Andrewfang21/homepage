@@ -10,7 +10,7 @@ type Project struct {
 	Title        string   `json:"title"`
 	Link         string   `json:"link"`
 	ImageURLs    []string `json:"imageUrls"`
-	DemoURL      string   `json:"demoUrl"`
+	DemoURL      *string  `json:"demoUrl"`
 	Descriptions string   `json:"descriptions"`
 }
 
